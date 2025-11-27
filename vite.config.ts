@@ -7,19 +7,26 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    open: true
+    open: true,
+    // Handle SPA routing - redirect all requests to index.html
+    historyApiFallback: true,
+  },
+  preview: {
+    port: 3000,
+    // Handle SPA routing in preview mode
+    historyApiFallback: true,
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@pages': path.resolve(__dirname, './src/pages'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
-      '@theme': path.resolve(__dirname, './src/theme'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-      '@constants': path.resolve(__dirname, './src/constants'),
-      '@assets': path.resolve(__dirname, './src/assets'),
-      '@types': path.resolve(__dirname, './src/types')
-    }
-  }
-})
+      "@": path.resolve(__dirname, "./src"),
+      "@components": path.resolve(__dirname, "./src/components"),
+      "@pages": path.resolve(__dirname, "./src/pages"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
+      "@theme": path.resolve(__dirname, "./src/theme"),
+      "@utils": path.resolve(__dirname, "./src/utils"),
+      "@constants": path.resolve(__dirname, "./src/constants"),
+      "@assets": path.resolve(__dirname, "./src/assets"),
+      "@types": path.resolve(__dirname, "./src/types"),
+    },
+  },
+});
