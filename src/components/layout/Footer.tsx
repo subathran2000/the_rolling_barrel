@@ -1,21 +1,12 @@
 import { Box, Container, Typography, IconButton, Link as MuiLink, Grid, Divider } from '@mui/material';
 import { motion } from 'framer-motion';
-import {
-  Facebook,
-  Instagram,
-  Phone,
-  LocationOn
-} from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import { RESTAURANT_INFO, NAV_LINKS } from '@/constants';
-import { fadeInUp, staggerContainer, staggerItem } from '@/utils';
+import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
+import { FiPhone, FiMapPin } from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { RESTAURANT_INFO, NAV_LINKS } from "@/constants";
+import { fadeInUp, staggerContainer, staggerItem } from "@/utils";
 
-// TikTok icon component
-const TikTokIcon = () => (
-  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
-  </svg>
-);
+// TikTok icon removed - replaced with react-icons FaTiktok
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -174,7 +165,10 @@ const Footer = () => {
                   }}
                 >
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                    <Phone sx={{ fontSize: 20, color: "secondary.main" }} />
+                    <FiPhone
+                      size={20}
+                      style={{ color: "var(--mui-palette-secondary-main)" }}
+                    />
                     <MuiLink
                       href={`tel:${RESTAURANT_INFO.phone}`}
                       sx={{
@@ -189,8 +183,12 @@ const Footer = () => {
                   <Box
                     sx={{ display: "flex", alignItems: "flex-start", gap: 1.5 }}
                   >
-                    <LocationOn
-                      sx={{ fontSize: 20, color: "secondary.main", mt: 0.3 }}
+                    <FiMapPin
+                      size={20}
+                      style={{
+                        color: "var(--mui-palette-secondary-main)",
+                        marginTop: 3,
+                      }}
                     />
                     <MuiLink
                       href={RESTAURANT_INFO.address.googleMapsUrl}
@@ -243,32 +241,6 @@ const Footer = () => {
                   >
                     Uber Eats
                   </MuiLink>
-                  <MuiLink
-                    href={RESTAURANT_INFO.delivery.doorDash}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: "primary.contrastText",
-                      opacity: 0.8,
-                      textDecoration: "none",
-                      "&:hover": { opacity: 1, color: "secondary.main" },
-                    }}
-                  >
-                    DoorDash
-                  </MuiLink>
-                  <MuiLink
-                    href={RESTAURANT_INFO.delivery.skipTheDishes}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: "primary.contrastText",
-                      opacity: 0.8,
-                      textDecoration: "none",
-                      "&:hover": { opacity: 1, color: "secondary.main" },
-                    }}
-                  >
-                    Skip The Dishes
-                  </MuiLink>
                 </Box>
               </motion.div>
             </Grid>
@@ -287,17 +259,17 @@ const Footer = () => {
             >
               {[
                 {
-                  icon: <Facebook />,
+                  icon: <FaFacebook />,
                   href: RESTAURANT_INFO.social.facebook,
                   label: "Facebook",
                 },
                 {
-                  icon: <Instagram />,
+                  icon: <FaInstagram />,
                   href: RESTAURANT_INFO.social.instagram,
                   label: "Instagram",
                 },
                 {
-                  icon: <TikTokIcon />,
+                  icon: <FaTiktok />,
                   href: RESTAURANT_INFO.social.tiktok,
                   label: "TikTok",
                 },
@@ -342,9 +314,24 @@ const Footer = () => {
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ opacity: 0.4, mt: 1, fontSize: "0.75rem" }}
+                sx={{ opacity: 0.5, mt: 1, fontSize: "0.875rem" }}
               >
-                Crafted with ❤️ in Oshawa, Ontario
+                Website by{" "}
+                <MuiLink
+                  href="https://www.akvisionsystems.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    color: "secondary.main",
+                    textDecoration: "none",
+                    fontWeight: 600,
+                    "&:hover": {
+                      textDecoration: "underline",
+                    },
+                  }}
+                >
+                  AK Vision Systems
+                </MuiLink>
               </Typography>
             </Box>
           </motion.div>

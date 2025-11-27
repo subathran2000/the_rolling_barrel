@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import {
   Box,
   Container,
@@ -6,23 +6,11 @@ import {
   Grid,
   Card,
   CardContent,
-  Tabs,
-  Tab,
   Chip,
-  useMediaQuery,
-  useTheme
-} from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  FreeBreakfast,
-  Restaurant,
-  LocalBar,
-  Cake,
-  LocalFireDepartment,
-  Spa
-} from '@mui/icons-material';
-import { fadeInUp, staggerContainer, staggerItem } from '@/utils';
-import { MENU_CATEGORIES } from '@/constants';
+} from "@mui/material";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaCoffee, FaUtensils, FaCocktail, FaBirthdayCake, FaFire, FaLeaf } from 'react-icons/fa';
+import { fadeInUp, staggerContainer, staggerItem } from "@/utils";
 
 interface MenuItem {
   id: string;
@@ -49,7 +37,7 @@ const menuData: MenuData = {
     title: "Breakfast",
     description:
       "All classic breakfast items are accompanied with home fries and fresh fruit.",
-    icon: <FreeBreakfast sx={{ fontSize: 40 }} />,
+    icon: <FaCoffee size={40} />,
     items: [
       // OUR CLASSIC BREAKFAST
       {
@@ -362,7 +350,7 @@ const menuData: MenuData = {
   main: {
     title: "Main Course",
     description: "Satisfy your hunger with our signature dishes",
-    icon: <Restaurant sx={{ fontSize: 40 }} />,
+    icon: <FaUtensils size={40} />,
     items: [
       {
         id: "m1",
@@ -428,7 +416,7 @@ const menuData: MenuData = {
   drinks: {
     title: "Drinks",
     description: "Refresh yourself with our curated beverage selection",
-    icon: <LocalBar sx={{ fontSize: 40 }} />,
+    icon: <FaCocktail size={40} />,
     items: [
       {
         id: "d1",
@@ -475,7 +463,7 @@ const menuData: MenuData = {
   desserts: {
     title: "Desserts",
     description: "End your meal on a sweet note",
-    icon: <Cake sx={{ fontSize: 40 }} />,
+    icon: <FaBirthdayCake size={40} />,
     items: [
       {
         id: "ds1",
@@ -522,23 +510,12 @@ const menuData: MenuData = {
 
 const Menu = () => {
   const { category } = useParams();
-  const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const currentCategory = category || 'breakfast';
+  const currentCategory = category || "breakfast";
   const currentMenu = menuData[currentCategory] || menuData.breakfast;
 
-  const handleCategoryChange = (_: React.SyntheticEvent, newValue: string) => {
-    navigate(`/menu/${newValue}`);
-  };
-
-  const getCategoryIndex = () => {
-    return MENU_CATEGORIES.findIndex(cat => cat.id === currentCategory);
-  };
-
   return (
-    <Box sx={{ overflow: 'hidden' }}>
+    <Box sx={{ overflow: "hidden" }}>
       {/* Hero Section */}
       <Box
         sx={{
@@ -548,7 +525,7 @@ const Menu = () => {
             radial-gradient(ellipse at 80% 70%, rgba(212, 165, 116, 0.1) 0%, transparent 40%),
             linear-gradient(180deg, #FFF9F5 0%, #FFFFFF 100%)
           `,
-          textAlign: 'center'
+          textAlign: "center",
         }}
       >
         <Container maxWidth="md">
@@ -561,11 +538,11 @@ const Menu = () => {
               <Typography
                 variant="overline"
                 sx={{
-                  color: 'primary.main',
+                  color: "primary.main",
                   fontWeight: 600,
                   letterSpacing: 4,
                   mb: 2,
-                  display: 'block'
+                  display: "block",
                 }}
               >
                 DISCOVER
@@ -576,10 +553,11 @@ const Menu = () => {
                 variant="h1"
                 sx={{
                   mb: 3,
-                  background: 'linear-gradient(135deg, #8B2635 0%, #5D1A23 50%, #D4A574 100%)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
+                  background:
+                    "linear-gradient(135deg, #8B2635 0%, #5D1A23 50%, #D4A574 100%)",
+                  backgroundClip: "text",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
                 }}
               >
                 Our Menu
@@ -589,10 +567,10 @@ const Menu = () => {
               <Typography
                 variant="h5"
                 sx={{
-                  color: 'text.secondary',
+                  color: "text.secondary",
                   maxWidth: 600,
-                  mx: 'auto',
-                  fontWeight: 400
+                  mx: "auto",
+                  fontWeight: 400,
                 }}
               >
                 Crafted with love, served with passion
@@ -602,59 +580,8 @@ const Menu = () => {
         </Container>
       </Box>
 
-      {/* Category Tabs */}
-      <Box
-        sx={{
-          position: 'sticky',
-          top: { xs: 70, md: 80 },
-          zIndex: 100,
-          bgcolor: 'background.paper',
-          borderBottom: '1px solid rgba(139, 38, 53, 0.1)',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)'
-        }}
-      >
-        <Container maxWidth="lg">
-          <Tabs
-            value={getCategoryIndex()}
-            onChange={(e, index) => handleCategoryChange(e, MENU_CATEGORIES[index].id)}
-            variant={isMobile ? 'scrollable' : 'fullWidth'}
-            scrollButtons="auto"
-            sx={{
-              '& .MuiTabs-indicator': {
-                height: 4,
-                borderRadius: 2,
-                bgcolor: 'primary.main'
-              },
-              '& .MuiTab-root': {
-                fontSize: { xs: '0.9rem', md: '1rem' },
-                fontWeight: 600,
-                py: 2.5,
-                minWidth: { xs: 100, md: 'auto' },
-                transition: 'color 0.3s ease',
-                '&.Mui-selected': {
-                  color: 'primary.main'
-                }
-              }
-            }}
-          >
-            {MENU_CATEGORIES.map((cat) => (
-              <Tab
-                key={cat.id}
-                label={cat.label}
-                icon={
-                  <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                    {menuData[cat.id]?.icon}
-                  </Box>
-                }
-                iconPosition="start"
-              />
-            ))}
-          </Tabs>
-        </Container>
-      </Box>
-
       {/* Menu Content */}
-      <Box sx={{ py: { xs: 6, md: 10 }, bgcolor: 'background.default' }}>
+      <Box sx={{ py: { xs: 6, md: 10 }, bgcolor: "background.default" }}>
         <Container maxWidth="lg">
           <AnimatePresence mode="wait">
             <motion.div
@@ -664,32 +591,6 @@ const Menu = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              {/* Category Header */}
-              <Box sx={{ textAlign: 'center', mb: 6 }}>
-                <Box
-                  sx={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 80,
-                    height: 80,
-                    borderRadius: '50%',
-                    bgcolor: 'primary.main',
-                    color: 'white',
-                    mb: 3,
-                    boxShadow: '0 10px 30px rgba(139, 38, 53, 0.3)'
-                  }}
-                >
-                  {currentMenu.icon}
-                </Box>
-                <Typography variant="h2" sx={{ mb: 2 }}>
-                  {currentMenu.title}
-                </Typography>
-                <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 500, mx: 'auto' }}>
-                  {currentMenu.description}
-                </Typography>
-              </Box>
-
               {/* Menu Items Grid */}
               <motion.div
                 variants={staggerContainer}
@@ -699,22 +600,19 @@ const Menu = () => {
                 <Grid container spacing={3}>
                   {currentMenu.items.map((item) => (
                     <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={item.id}>
-                      <motion.div
-                        variants={staggerItem}
-                        whileHover={{ y: -5 }}
-                      >
+                      <motion.div variants={staggerItem} whileHover={{ y: -5 }}>
                         <Card
                           sx={{
-                            height: '100%',
+                            height: "100%",
                             p: 3,
-                            border: '1px solid rgba(139, 38, 53, 0.1)',
-                            position: 'relative',
-                            overflow: 'visible',
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                              borderColor: 'primary.main',
-                              boxShadow: '0 15px 40px rgba(139, 38, 53, 0.15)'
-                            }
+                            border: "1px solid rgba(139, 38, 53, 0.1)",
+                            position: "relative",
+                            overflow: "visible",
+                            transition: "all 0.3s ease",
+                            "&:hover": {
+                              borderColor: "primary.main",
+                              boxShadow: "0 15px 40px rgba(139, 38, 53, 0.15)",
+                            },
                           }}
                         >
                           {item.isPopular && (
@@ -722,26 +620,36 @@ const Menu = () => {
                               label="Popular"
                               size="small"
                               sx={{
-                                position: 'absolute',
+                                position: "absolute",
                                 top: -10,
                                 right: 16,
-                                bgcolor: 'primary.main',
-                                color: 'white',
-                                fontWeight: 600
+                                bgcolor: "primary.main",
+                                color: "white",
+                                fontWeight: 600,
                               }}
                             />
                           )}
                           <CardContent sx={{ p: 0 }}>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                              <Typography variant="h6" sx={{ fontWeight: 700, pr: 2 }}>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "flex-start",
+                                mb: 2,
+                              }}
+                            >
+                              <Typography
+                                variant="h6"
+                                sx={{ fontWeight: 700, pr: 2 }}
+                              >
                                 {item.name}
                               </Typography>
                               <Typography
                                 variant="h6"
                                 sx={{
-                                  color: 'primary.main',
+                                  color: "primary.main",
                                   fontWeight: 800,
-                                  whiteSpace: 'nowrap'
+                                  whiteSpace: "nowrap",
                                 }}
                               >
                                 {item.price}
@@ -754,28 +662,30 @@ const Menu = () => {
                             >
                               {item.description}
                             </Typography>
-                            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                            <Box
+                              sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}
+                            >
                               {item.isVegetarian && (
                                 <Chip
-                                  icon={<Spa sx={{ fontSize: 16 }} />}
+                                  icon={<FaLeaf size={16} />}
                                   label="Vegetarian"
                                   size="small"
                                   sx={{
-                                    bgcolor: 'rgba(76, 175, 80, 0.1)',
-                                    color: '#4CAF50',
-                                    '& .MuiChip-icon': { color: '#4CAF50' }
+                                    bgcolor: "rgba(76, 175, 80, 0.1)",
+                                    color: "#4CAF50",
+                                    "& .MuiChip-icon": { color: "#4CAF50" },
                                   }}
                                 />
                               )}
                               {item.isSpicy && (
                                 <Chip
-                                  icon={<LocalFireDepartment sx={{ fontSize: 16 }} />}
+                                  icon={<FaFire size={16} />}
                                   label="Spicy"
                                   size="small"
                                   sx={{
-                                    bgcolor: 'rgba(255, 87, 34, 0.1)',
-                                    color: '#FF5722',
-                                    '& .MuiChip-icon': { color: '#FF5722' }
+                                    bgcolor: "rgba(255, 87, 34, 0.1)",
+                                    color: "#FF5722",
+                                    "& .MuiChip-icon": { color: "#FF5722" },
                                   }}
                                 />
                               )}
@@ -796,13 +706,14 @@ const Menu = () => {
       <Box
         sx={{
           py: 6,
-          bgcolor: 'background.paper',
-          textAlign: 'center'
+          bgcolor: "background.paper",
+          textAlign: "center",
         }}
       >
         <Container maxWidth="md">
           <Typography variant="body2" color="text.secondary">
-            * Prices are subject to change. Please inform our staff of any allergies or dietary restrictions.
+            * Prices are subject to change. Please inform our staff of any
+            allergies or dietary restrictions.
           </Typography>
         </Container>
       </Box>

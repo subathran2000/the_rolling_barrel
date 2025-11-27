@@ -1,7 +1,7 @@
 import { Box, IconButton, Tooltip, Zoom } from '@mui/material';
-import { Phone } from '@mui/icons-material';
-import { motion } from 'framer-motion';
-import { RESTAURANT_INFO } from '@/constants';
+import { FiPhone } from "react-icons/fi";
+import { motion } from "framer-motion";
+import { RESTAURANT_INFO } from "@/constants";
 
 const FloatingCallButton = () => {
   return (
@@ -15,29 +15,29 @@ const FloatingCallButton = () => {
         component={motion.div}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 1, type: 'spring', stiffness: 200 }}
+        transition={{ delay: 1, type: "spring", stiffness: 200 }}
         sx={{
-          position: 'fixed',
+          position: "fixed",
           bottom: { xs: 24, md: 32 },
           right: { xs: 24, md: 32 },
-          zIndex: 1000
+          zIndex: 1000,
         }}
       >
         <motion.div
           animate={{
             scale: [1, 1.1, 1],
             boxShadow: [
-              '0 4px 20px rgba(139, 38, 53, 0.3)',
-              '0 8px 40px rgba(139, 38, 53, 0.5)',
-              '0 4px 20px rgba(139, 38, 53, 0.3)'
-            ]
+              "0 4px 20px rgba(139, 38, 53, 0.3)",
+              "0 8px 40px rgba(139, 38, 53, 0.5)",
+              "0 4px 20px rgba(139, 38, 53, 0.3)",
+            ],
           }}
           transition={{
             duration: 2,
             repeat: Infinity,
-            ease: 'easeInOut'
+            ease: "easeInOut",
           }}
-          style={{ borderRadius: '50%' }}
+          style={{ borderRadius: "50%" }}
         >
           <IconButton
             component="a"
@@ -46,18 +46,21 @@ const FloatingCallButton = () => {
             sx={{
               width: { xs: 56, md: 64 },
               height: { xs: 56, md: 64 },
-              bgcolor: 'primary.main',
-              color: 'white',
-              boxShadow: '0 4px 20px rgba(139, 38, 53, 0.4)',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                bgcolor: 'primary.dark',
-                transform: 'scale(1.1)',
-                boxShadow: '0 8px 30px rgba(139, 38, 53, 0.5)'
+              bgcolor: "primary.main",
+              color: "white",
+              boxShadow: "0 4px 20px rgba(139, 38, 53, 0.4)",
+              transition: "all 0.3s ease",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "&:hover": {
+                bgcolor: "primary.dark",
+                transform: "scale(1.1)",
+                boxShadow: "0 8px 30px rgba(139, 38, 53, 0.5)",
               },
-              '&:active': {
-                transform: 'scale(0.95)'
-              }
+              "&:active": {
+                transform: "scale(0.95)",
+              },
             }}
           >
             <motion.div
@@ -65,10 +68,15 @@ const FloatingCallButton = () => {
               transition={{
                 duration: 0.5,
                 repeat: Infinity,
-                repeatDelay: 3
+                repeatDelay: 3,
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <Phone sx={{ fontSize: { xs: 28, md: 32 } }} />
+              <FiPhone size={24} style={{ width: "auto", height: "auto" }} />
             </motion.div>
           </IconButton>
         </motion.div>

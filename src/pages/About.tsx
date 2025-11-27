@@ -1,13 +1,8 @@
 import { Box, Container, Typography, Grid, Card, CardContent } from '@mui/material';
 import { motion } from 'framer-motion';
-import {
-  Restaurant,
-  Groups,
-  EmojiEvents,
-  Favorite
-} from '@mui/icons-material';
-import { fadeInUp, staggerContainer, staggerItem } from '@/utils';
-import { useInView } from '@/hooks';
+import { FaUtensils, FaUsers, FaTrophy, FaHeart } from "react-icons/fa";
+import { fadeInUp, staggerContainer, staggerItem } from "@/utils";
+import { useInView } from "@/hooks";
 
 const About = () => {
   const { ref: storyRef, isInView: storyInView } = useInView();
@@ -16,25 +11,29 @@ const About = () => {
 
   const values = [
     {
-      icon: <Restaurant sx={{ fontSize: 40 }} />,
-      title: 'Quality First',
-      description: 'We never compromise on the quality of our ingredients. Every dish is crafted with care using the freshest local produce.'
+      icon: <FaUtensils size={40} />,
+      title: "Quality First",
+      description:
+        "We never compromise on the quality of our ingredients. Every dish is crafted with care using the freshest local produce.",
     },
     {
-      icon: <Groups sx={{ fontSize: 40 }} />,
-      title: 'Community',
-      description: 'We believe in building a strong community. Our restaurant is a place where neighbors become friends over great food.'
+      icon: <FaUsers size={40} />,
+      title: "Community",
+      description:
+        "We believe in building a strong community. Our restaurant is a place where neighbors become friends over great food.",
     },
     {
-      icon: <EmojiEvents sx={{ fontSize: 40 }} />,
-      title: 'Excellence',
-      description: 'Striving for excellence in every aspect - from our recipes to our service. Your satisfaction is our greatest achievement.'
+      icon: <FaTrophy size={40} />,
+      title: "Excellence",
+      description:
+        "Striving for excellence in every aspect - from our recipes to our service. Your satisfaction is our greatest achievement.",
     },
     {
-      icon: <Favorite sx={{ fontSize: 40 }} />,
-      title: 'Passion',
-      description: 'Cooking with love and serving with heart. Our passion for food drives us to create memorable dining experiences.'
-    }
+      icon: <FaHeart size={40} />,
+      title: "Passion",
+      description:
+        "Cooking with love and serving with heart. Our passion for food drives us to create memorable dining experiences.",
+    },
   ];
 
   return (
@@ -195,8 +194,7 @@ const About = () => {
                           sx={{
                             width: { xs: 150, md: 200 },
                             height: { xs: 150, md: 200 },
-                            borderRadius: "50%",
-                            objectFit: "cover",
+                            objectFit: "fill",
                           }}
                         />
                       </motion.div>
