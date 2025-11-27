@@ -16,8 +16,7 @@ import {
   Collapse,
   Popper,
   Paper,
-  Fade,
-  ClickAwayListener
+  Fade
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -25,7 +24,7 @@ import {
   ExpandMore,
   ExpandLess
 } from '@mui/icons-material';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { NAV_LINKS, MENU_CATEGORIES, RESTAURANT_INFO } from '@/constants';
 import { useScrollPosition } from '@/hooks';
 
