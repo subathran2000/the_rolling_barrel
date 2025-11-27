@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -698,7 +697,7 @@ const Menu = () => {
                 animate="visible"
               >
                 <Grid container spacing={3}>
-                  {currentMenu.items.map((item, index) => (
+                  {currentMenu.items.map((item) => (
                     <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={item.id}>
                       <motion.div
                         variants={staggerItem}

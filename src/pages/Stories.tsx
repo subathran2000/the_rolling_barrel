@@ -198,7 +198,7 @@ const Stories = () => {
             </Box>
 
             <Grid container spacing={4}>
-              {testimonials.map((testimonial, index) => (
+              {testimonials.map((testimonial) => (
                 <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={testimonial.id}>
                   <motion.div
                     variants={staggerItem}

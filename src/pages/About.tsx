@@ -188,12 +188,13 @@ const About = () => {
                       >
                         <Box
                           component="img"
-                          src="/barrel-logo.svg"
+                          src="/the-rolling-barrel.svg"
                           alt="The Rolling Barrel"
                           sx={{
                             width: { xs: 150, md: 200 },
                             height: { xs: 150, md: 200 },
-                            filter: 'brightness(1.3)'
+                            borderRadius: '50%',
+                            objectFit: 'cover'
                           }}
                         />
                       </motion.div>

@@ -336,7 +336,7 @@ const Home = () => {
                     />
                     <Box
                       component={motion.img}
-                      src="/barrel-logo.svg"
+                      src="/the-rolling-barrel.svg"
                       alt="The Rolling Barrel"
                       animate={{
                         y: [0, -20, 0],

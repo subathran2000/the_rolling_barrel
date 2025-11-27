@@ -104,7 +104,7 @@ const Header = () => {
             >
               <Box
                 component="img"
-                src="/barrel-logo.svg"
+                src="/the-rolling-barrel.svg"
                 alt="The Rolling Barrel"
                 sx={{ width: { xs: 45, md: 55 }, height: { xs: 45, md: 55 } }}
               />
@@ -321,7 +321,7 @@ const Header = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
             <Box
               component="img"
-              src="/barrel-logo.svg"
+              src="/the-rolling-barrel.svg"
               alt="The Rolling Barrel"
               sx={{ width: 45, height: 45 }}
             />

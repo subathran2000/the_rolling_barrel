@@ -215,7 +215,7 @@ const Specials = () => {
             </Box>
 
             <Grid container spacing={4}>
-              {specials.map((special, index) => (
+              {specials.map((special) => (
                 <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={special.id}>
                   <motion.div
                     variants={staggerItem}
@@ -364,7 +364,7 @@ const Specials = () => {
             </Box>
 
             <Grid container spacing={3}>
-              {weeklySpecials.map((item, index) => (
+              {weeklySpecials.map((item) => (
                 <Grid size={{ xs: 12, sm: 6, md: 4, lg: 12/7 * 2 }} key={item.day}>
                   <motion.div
                     variants={staggerItem}
