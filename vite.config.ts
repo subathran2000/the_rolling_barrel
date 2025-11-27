@@ -7,14 +7,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    open: true,
-    // Handle SPA routing - redirect all requests to index.html
-    historyApiFallback: true,
+    open: true
   },
   preview: {
-    port: 3000,
-    // Handle SPA routing in preview mode
-    historyApiFallback: true,
+    port: 3000
   },
   resolve: {
     alias: {
