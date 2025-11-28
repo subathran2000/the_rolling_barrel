@@ -104,6 +104,11 @@ const Header = () => {
             <motion.div
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.6 }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
               <Box
                 component="img"
@@ -112,8 +117,12 @@ const Header = () => {
                 sx={{
                   width: { xs: 50, md: 55 },
                   height: { xs: 50, md: 55 },
-                  objectFit: "fill",
-                  imageRendering: "high-quality",
+                  objectFit: "contain",
+                  WebkitTransform: "translateZ(0)",
+                  transform: "translateZ(0)",
+                  WebkitBackfaceVisibility: "hidden",
+                  backfaceVisibility: "hidden",
+                  willChange: "transform",
                 }}
               />
             </motion.div>
@@ -161,147 +170,151 @@ const Header = () => {
                     onMouseEnter={
                       link.label === "Menu" ? handleMenuOpen : undefined
                     }
-                  onMouseLeave={
-                    link.label === "Menu" ? handleMenuClose : undefined
-                  }
-                  sx={{ position: "relative" }}
-                >
-                  <Box
-                    component={motion.div}
-                    whileHover={{ y: -2 }}
-                    transition={{ duration: 0.2 }}
+                    onMouseLeave={
+                      link.label === "Menu" ? handleMenuClose : undefined
+                    }
+                    sx={{ position: "relative" }}
                   >
                     <Box
-                      component={Link}
-                      to={link.path}
-                      onClick={() =>
-                        window.scrollTo({ top: 0, behavior: "smooth" })
-                      }
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        px: { md: 1.5, lg: 2 },
-                        py: 1,
-                        textDecoration: "none",
-                        color: isActive(link.path)
-                          ? "primary.main"
-                          : "text.primary",
-                        fontWeight: isActive(link.path) ? 700 : 500,
-                        fontSize: "0.95rem",
-                        position: "relative",
-                        transition: "color 0.3s ease",
-                        "&:hover": {
-                          color: "primary.main",
-                        },
-                      }}
+                      component={motion.div}
+                      whileHover={{ y: -2 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      {link.label}
-                      {link.label === "Menu" && (
-                        <FiChevronDown
-                          style={{
-                            fontSize: 18,
-                            marginLeft: 6,
-                            transition: "transform 0.3s ease",
-                            transform: menuOpen ? "rotate(180deg)" : "rotate(0deg)",
-                          }}
-                        />
-                      )}
-                      {/* Animated underline indicator */}
-                      {isActive(link.path) && (
-                        <motion.div
-                          layoutId="nav-indicator"
-                          style={{
-                            position: "absolute",
-                            bottom: 0,
-                            left: "10%",
-                            right: "10%",
-                            height: 3,
-                            backgroundColor: "#8B2635",
-                            borderRadius: 4,
-                          }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 380,
-                            damping: 30,
-                          }}
-                        />
-                      )}
-                    </Box>
-                  </Box>
-
-                  {/* Menu Dropdown */}
-                  {link.label === "Menu" && (
-                    <Popper
-                      open={menuOpen}
-                      anchorEl={menuAnchorEl}
-                      placement="bottom-start"
-                      transition
-                      sx={{ zIndex: 1200 }}
-                      disablePortal={true}
-                    >
-                      {({ TransitionProps }) => (
-                        <Fade {...TransitionProps} timeout={300}>
-                          <Paper
-                            sx={{
-                              mt: 1,
-                              borderRadius: 1,
-                              overflow: "hidden",
-                              boxShadow: "0 20px 60px rgba(139, 38, 53, 0.2)",
-                              border: "1px solid rgba(139, 38, 53, 0.1)",
-                              pointerEvents: "auto",
+                      <Box
+                        component={Link}
+                        to={link.path}
+                        onClick={() =>
+                          window.scrollTo({ top: 0, behavior: "smooth" })
+                        }
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          px: { md: 1.5, lg: 2 },
+                          py: 1,
+                          textDecoration: "none",
+                          color: isActive(link.path)
+                            ? "primary.main"
+                            : "text.primary",
+                          fontWeight: isActive(link.path) ? 700 : 500,
+                          fontSize: "0.95rem",
+                          position: "relative",
+                          transition: "color 0.3s ease",
+                          "&:hover": {
+                            color: "primary.main",
+                          },
+                        }}
+                      >
+                        {link.label}
+                        {link.label === "Menu" && (
+                          <FiChevronDown
+                            style={{
+                              fontSize: 18,
+                              marginLeft: 6,
+                              transition: "transform 0.3s ease",
+                              transform: menuOpen
+                                ? "rotate(180deg)"
+                                : "rotate(0deg)",
                             }}
-                          >
-                            <Box sx={{ p: 1, minWidth: 200 }}>
-                              {MENU_CATEGORIES.map((category, index) => (
-                                <Box
-                                  key={category.id}
-                                  component={motion.div}
-                                  initial={{ opacity: 0, x: -20 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: index * 0.05 }}
-                                  onClick={() => handleMenuClick(category.path)}
-                                  sx={{
-                                    px: 2.5,
-                                    py: 1.5,
-                                    cursor: "pointer",
-                                    borderRadius: 2,
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: 1.5,
-                                    transition: "all 0.2s ease",
-                                    "&:hover": {
-                                      bgcolor: "rgba(139, 38, 53, 0.08)",
-                                      pl: 3,
-                                    },
-                                  }}
-                                >
+                          />
+                        )}
+                        {/* Animated underline indicator */}
+                        {isActive(link.path) && (
+                          <motion.div
+                            layoutId="nav-indicator"
+                            style={{
+                              position: "absolute",
+                              bottom: 0,
+                              left: "10%",
+                              right: "10%",
+                              height: 3,
+                              backgroundColor: "#8B2635",
+                              borderRadius: 4,
+                            }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 380,
+                              damping: 30,
+                            }}
+                          />
+                        )}
+                      </Box>
+                    </Box>
+
+                    {/* Menu Dropdown */}
+                    {link.label === "Menu" && (
+                      <Popper
+                        open={menuOpen}
+                        anchorEl={menuAnchorEl}
+                        placement="bottom-start"
+                        transition
+                        sx={{ zIndex: 1200 }}
+                        disablePortal={true}
+                      >
+                        {({ TransitionProps }) => (
+                          <Fade {...TransitionProps} timeout={300}>
+                            <Paper
+                              sx={{
+                                mt: 1,
+                                borderRadius: 1,
+                                overflow: "hidden",
+                                boxShadow: "0 20px 60px rgba(139, 38, 53, 0.2)",
+                                border: "1px solid rgba(139, 38, 53, 0.1)",
+                                pointerEvents: "auto",
+                              }}
+                            >
+                              <Box sx={{ p: 1, minWidth: 200 }}>
+                                {MENU_CATEGORIES.map((category, index) => (
                                   <Box
+                                    key={category.id}
+                                    component={motion.div}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: index * 0.05 }}
+                                    onClick={() =>
+                                      handleMenuClick(category.path)
+                                    }
                                     sx={{
-                                      width: 8,
-                                      height: 8,
-                                      borderRadius: "50%",
-                                      bgcolor: "primary.main",
-                                      opacity: 0.6,
-                                    }}
-                                  />
-                                  <Typography
-                                    sx={{
-                                      fontWeight: 500,
-                                      color: "text.primary",
+                                      px: 2.5,
+                                      py: 1.5,
+                                      cursor: "pointer",
+                                      borderRadius: 2,
+                                      display: "flex",
+                                      alignItems: "center",
+                                      gap: 1.5,
+                                      transition: "all 0.2s ease",
+                                      "&:hover": {
+                                        bgcolor: "rgba(139, 38, 53, 0.08)",
+                                        pl: 3,
+                                      },
                                     }}
                                   >
-                                    {category.label}
-                                  </Typography>
-                                </Box>
-                              ))}
-                            </Box>
-                          </Paper>
-                        </Fade>
-                      )}
-                    </Popper>
-                  )}
-                </Box>
-              ))}
+                                    <Box
+                                      sx={{
+                                        width: 8,
+                                        height: 8,
+                                        borderRadius: "50%",
+                                        bgcolor: "primary.main",
+                                        opacity: 0.6,
+                                      }}
+                                    />
+                                    <Typography
+                                      sx={{
+                                        fontWeight: 500,
+                                        color: "text.primary",
+                                      }}
+                                    >
+                                      {category.label}
+                                    </Typography>
+                                  </Box>
+                                ))}
+                              </Box>
+                            </Paper>
+                          </Fade>
+                        )}
+                      </Popper>
+                    )}
+                  </Box>
+                ))}
               </Box>
             </LayoutGroup>
           )}
@@ -407,7 +420,8 @@ const Header = () => {
                           : "text.primary",
                       }}
                     />
-                    {link.label === "Menu" && (menuExpanded ? <FiChevronUp /> : <FiChevronDown />)}
+                    {link.label === "Menu" &&
+                      (menuExpanded ? <FiChevronUp /> : <FiChevronDown />)}
                   </ListItemButton>
                 </ListItem>
               </motion.div>

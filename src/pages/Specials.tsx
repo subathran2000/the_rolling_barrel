@@ -1,5 +1,6 @@
 import { Box, Container, Typography, Grid, Card, CardContent, Chip, Button } from '@mui/material';
 import { motion } from 'framer-motion';
+import { Link } from "react-router-dom";
 import { FiClock } from "react-icons/fi";
 import { FaTag, FaStar } from "react-icons/fa";
 import { fadeInUp, staggerContainer, staggerItem } from "@/utils";
@@ -484,8 +485,8 @@ const Specials = () => {
             </Typography>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
-                component="a"
-                href="tel:905-743-0722"
+                component={Link}
+                to="/contact?subject=Reservation"
                 variant="contained"
                 size="large"
                 sx={{ py: 2, px: 5, fontSize: "1.1rem" }}

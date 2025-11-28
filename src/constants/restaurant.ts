@@ -1,7 +1,9 @@
 // Restaurant Information Constants
 export const RESTAURANT_INFO = {
   name: "The Rolling Barrel",
-  tagline: "Where Every Meal Rolls Into Perfection",
+  tagline: "Good Food. Great Vibes. Everyone's Welcome!",
+  subtitle: "Heart & Grill on Taunton Rd W",
+  website: "rollingbarrel.ca",
   phone: "905-743-0722",
   phoneFormatted: "(905) 743-0722",
   address: {

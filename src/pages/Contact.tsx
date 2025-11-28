@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Box,
   Container,
@@ -16,6 +17,11 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import dayjs, { Dayjs } from "dayjs";
 import { motion } from "framer-motion";
 import { FiPhone, FiMail, FiMapPin, FiSend } from "react-icons/fi";
 import { fadeInUp, staggerContainer, staggerItem } from "@/utils";
@@ -57,10 +63,27 @@ const subjectOptions = [
 ];
 
 const Contact = () => {
+  const [searchParams] = useSearchParams();
   const { ref: formRef, isInView: formInView } = useInView();
   const { ref: infoRef, isInView: infoInView } = useInView();
 
   const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+  const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
+
+  // Auto-select subject from URL params (e.g., /contact?subject=Reservation)
+  useEffect(() => {
+    const subjectParam = searchParams.get("subject");
+    if (subjectParam && subjectOptions.includes(subjectParam)) {
+      setFormData((prev) => ({ ...prev, subject: subjectParam }));
+      // Scroll to form after a short delay
+      setTimeout(() => {
+        document
+          .getElementById("contact-form")
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 500);
+    }
+  }, [searchParams]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -355,7 +378,7 @@ const Contact = () => {
       </Box>
 
       {/* Contact Form */}
-      <Box sx={{ py: { xs: 8, md: 12 }, bgcolor: "#FFF9F5" }}>
+      <Box id="contact-form" sx={{ py: { xs: 8, md: 12 }, bgcolor: "#FFF9F5" }}>
         <Container maxWidth="md">
           <motion.div
             ref={formRef}
@@ -479,66 +502,56 @@ const Contact = () => {
 
                     {/* Reservation-specific fields */}
                     {formData.subject === "Reservation" && (
-                      <>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <Grid size={{ xs: 12, sm: 4 }}>
-                          <TextField
-                            fullWidth
-                            label="Date"
-                            name="date"
-                            type="date"
-                            value={formData.date}
-                            onChange={handleChange}
-                            error={!!errors.date}
-                            helperText={errors.date}
-                            InputLabelProps={{ shrink: true }}
-                            inputProps={{
-                              min: new Date().toISOString().split("T")[0],
-                              style: { colorScheme: "light" },
+                          <DatePicker
+                            label="Date *"
+                            value={selectedDate}
+                            onChange={(newValue) => {
+                              setSelectedDate(newValue);
+                              setFormData({
+                                ...formData,
+                                date: newValue
+                                  ? newValue.format("YYYY-MM-DD")
+                                  : "",
+                              });
+                              if (errors.date) {
+                                setErrors({ ...errors, date: undefined });
+                              }
                             }}
-                            sx={{
-                              '& input[type="date"]::-webkit-calendar-picker-indicator':
-                                {
-                                  filter:
-                                    "invert(26%) sepia(89%) saturate(1583%) hue-rotate(333deg) brightness(85%) contrast(93%)",
-                                  cursor: "pointer",
-                                },
-                              "& .MuiOutlinedInput-root": {
-                                "&:hover fieldset": {
-                                  borderColor: "primary.main",
-                                },
+                            minDate={dayjs()}
+                            slotProps={{
+                              textField: {
+                                fullWidth: true,
+                                error: !!errors.date,
+                                helperText: errors.date,
+                                required: true,
                               },
                             }}
-                            required
                           />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 4 }}>
-                          <TextField
-                            fullWidth
-                            label="Time"
-                            name="time"
-                            type="time"
-                            value={formData.time}
-                            onChange={handleChange}
-                            error={!!errors.time}
-                            helperText={errors.time}
-                            InputLabelProps={{ shrink: true }}
-                            inputProps={{
-                              style: { colorScheme: "light" },
+                          <TimePicker
+                            label="Time *"
+                            value={selectedTime}
+                            onChange={(newValue) => {
+                              setSelectedTime(newValue);
+                              setFormData({
+                                ...formData,
+                                time: newValue ? newValue.format("HH:mm") : "",
+                              });
+                              if (errors.time) {
+                                setErrors({ ...errors, time: undefined });
+                              }
                             }}
-                            sx={{
-                              '& input[type="time"]::-webkit-calendar-picker-indicator':
-                                {
-                                  filter:
-                                    "invert(26%) sepia(89%) saturate(1583%) hue-rotate(333deg) brightness(85%) contrast(93%)",
-                                  cursor: "pointer",
-                                },
-                              "& .MuiOutlinedInput-root": {
-                                "&:hover fieldset": {
-                                  borderColor: "primary.main",
-                                },
+                            slotProps={{
+                              textField: {
+                                fullWidth: true,
+                                error: !!errors.time,
+                                helperText: errors.time,
+                                required: true,
                               },
                             }}
-                            required
                           />
                         </Grid>
                         <Grid size={{ xs: 12, sm: 4 }}>
@@ -551,11 +564,11 @@ const Contact = () => {
                             onChange={handleChange}
                             error={!!errors.guests}
                             helperText={errors.guests}
-                            inputProps={{ min: 1, max: 20 }}
+                            inputProps={{ min: 1 }}
                             required
                           />
                         </Grid>
-                      </>
+                      </LocalizationProvider>
                     )}
 
                     <Grid size={{ xs: 12 }}>

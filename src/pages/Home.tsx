@@ -1,11 +1,25 @@
 import { Box, Container, Typography, Button, Grid, Card, CardContent, Chip } from '@mui/material';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FaUtensils, FaCocktail, FaStar, FaTruck } from 'react-icons/fa';
-import { FiClock, FiChevronRight } from 'react-icons/fi';
-import { RESTAURANT_INFO } from '@/constants';
-import { fadeInUp, staggerContainer, staggerItem, heroTextAnimation } from '@/utils';
-import { useInView } from '@/hooks';
+import {
+  FaUtensils,
+  FaCocktail,
+  FaStar,
+  FaTruck,
+  FaGamepad,
+  FaCalendarAlt,
+  FaConciergeBell,
+  FaChild,
+} from "react-icons/fa";
+import { FiClock, FiChevronRight, FiPhone, FiMapPin } from "react-icons/fi";
+import { RESTAURANT_INFO } from "@/constants";
+import {
+  fadeInUp,
+  staggerContainer,
+  staggerItem,
+  heroTextAnimation,
+} from "@/utils";
+import { useInView } from "@/hooks";
 
 const Home = () => {
   const { scrollY } = useScroll();
@@ -19,19 +33,21 @@ const Home = () => {
   const features = [
     {
       icon: <FaUtensils size={40} />,
-      title: 'Fresh Ingredients',
-      description: 'Locally sourced, farm-fresh ingredients prepared with passion and expertise.'
-    },
-    {
-      icon: <FaCocktail size={40} />,
-      title: 'Craft Beverages',
-      description: 'Handcrafted cocktails and curated selections to complement your meal.'
+      title: "Breakfast, Lunch & Dinner",
+      description:
+        "Fresh meals every day! From stacked breakfasts to sizzling dinners.",
     },
     {
       icon: <FiClock size={40} />,
-      title: 'Open Daily',
-      description: 'Serving breakfast, lunch, and dinner with warm hospitality every day.'
-    }
+      title: "Open 7 Days a Week",
+      description:
+        "Monday through Sunday. Sunday early hours starting at 9 AM!",
+    },
+    {
+      icon: <FaGamepad size={40} />,
+      title: "Game Nights",
+      description: "Catch the action on our big screens. Join the fun!",
+    },
   ];
 
   const deliveryPlatforms = [
@@ -244,7 +260,7 @@ const Home = () => {
                       >
                         <Button
                           component={Link}
-                          to="/contact"
+                          to="/contact?subject=Reservation"
                           variant="outlined"
                           size="large"
                           sx={{
@@ -498,6 +514,128 @@ const Home = () => {
         </Container>
       </Box>
 
+      {/* What We Offer Section */}
+      <Box
+        sx={{
+          py: { xs: 8, md: 10 },
+          bgcolor: "background.default",
+        }}
+      >
+        <Container maxWidth="lg">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <Box sx={{ textAlign: "center", mb: 6 }}>
+              <motion.div variants={fadeInUp}>
+                <Typography
+                  variant="overline"
+                  sx={{
+                    color: "primary.main",
+                    fontWeight: 600,
+                    letterSpacing: 3,
+                    mb: 2,
+                    display: "block",
+                  }}
+                >
+                  WE INVITE YOU
+                </Typography>
+              </motion.div>
+              <motion.div variants={fadeInUp}>
+                <Typography variant="h2" sx={{ color: "text.primary", mb: 2 }}>
+                  What We Offer
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  sx={{ maxWidth: 600, mx: "auto" }}
+                >
+                  Families, friends, food lovers — come on in! Whether you're
+                  catching a game, celebrating a special day, or grabbing a cozy
+                  bite, we've got something for everyone.
+                </Typography>
+              </motion.div>
+            </Box>
+
+            <Grid container spacing={3} justifyContent="center">
+              {[
+                {
+                  icon: <FaChild size={28} />,
+                  label: "Kids Menu & Sweet Desserts",
+                  link: "/menu",
+                },
+                {
+                  icon: <FaConciergeBell size={28} />,
+                  label: "Dine-In & Takeout",
+                  link: null,
+                },
+                {
+                  icon: <FaCalendarAlt size={28} />,
+                  label: "Reservations Welcome",
+                  link: "/contact?subject=Reservation",
+                },
+                {
+                  icon: <FaUtensils size={28} />,
+                  label: "Catering for All Occasions",
+                  link: "/contact?subject=Catering",
+                },
+                {
+                  icon: <FaStar size={28} />,
+                  label: "Daily Specials",
+                  link: "/specials",
+                },
+              ].map((item, index) => (
+                <Grid size={{ xs: 6, sm: 4, md: 2.4 }} key={index}>
+                  <motion.div
+                    variants={staggerItem}
+                    whileHover={{ scale: 1.05, y: -5 }}
+                  >
+                    <Box
+                      component={item.link ? Link : "div"}
+                      {...(item.link ? { to: item.link } : {})}
+                      sx={{
+                        textAlign: "center",
+                        p: 3,
+                        borderRadius: 2,
+                        bgcolor: "background.paper",
+                        border: "1px solid",
+                        borderColor: "divider",
+                        height: "100%",
+                        display: "block",
+                        textDecoration: "none",
+                        cursor: item.link ? "pointer" : "default",
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          borderColor: "primary.main",
+                          boxShadow: "0 8px 30px rgba(139, 38, 53, 0.15)",
+                        },
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          color: "primary.main",
+                          mb: 2,
+                        }}
+                      >
+                        {item.icon}
+                      </Box>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: 600, color: "text.primary" }}
+                      >
+                        {item.label}
+                      </Typography>
+                    </Box>
+                  </motion.div>
+                </Grid>
+              ))}
+            </Grid>
+          </motion.div>
+        </Container>
+      </Box>
+
       {/* Specials CTA Section */}
       <Box
         ref={specialsRef}
@@ -549,9 +687,9 @@ const Home = () => {
               </motion.div>
               <motion.div variants={fadeInUp}>
                 <Typography variant="h2" sx={{ mb: 3 }}>
-                  Check Out Our
+                  Daily Specials
                   <br />
-                  Today's Specials
+                  Come See What's Cooking!
                 </Typography>
               </motion.div>
               <motion.div variants={fadeInUp}>
@@ -565,8 +703,8 @@ const Home = () => {
                     mx: "auto",
                   }}
                 >
-                  Discover our chef's special creations, available for a limited
-                  time only. Fresh, flavorful, and unforgettable.
+                  Discover our chef's special creations. Fresh, flavorful, and
+                  unforgettable. Every bite keeps you rolling back for more!
                 </Typography>
               </motion.div>
               <motion.div
@@ -593,6 +731,147 @@ const Home = () => {
                   }}
                 >
                   View Specials
+                </Button>
+              </motion.div>
+            </Box>
+          </motion.div>
+        </Container>
+      </Box>
+
+      {/* Our Menus Section */}
+      <Box
+        sx={{
+          py: { xs: 8, md: 10 },
+          bgcolor: "background.paper",
+        }}
+      >
+        <Container maxWidth="lg">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <Box sx={{ textAlign: "center", mb: 6 }}>
+              <motion.div variants={fadeInUp}>
+                <Typography
+                  variant="overline"
+                  sx={{
+                    color: "primary.main",
+                    fontWeight: 600,
+                    letterSpacing: 3,
+                    mb: 2,
+                    display: "block",
+                  }}
+                >
+                  OUR MENUS
+                </Typography>
+              </motion.div>
+              <motion.div variants={fadeInUp}>
+                <Typography variant="h2" sx={{ color: "text.primary", mb: 2 }}>
+                  Something for Every Meal
+                </Typography>
+              </motion.div>
+            </Box>
+
+            <Grid container spacing={4} justifyContent="center">
+              {[
+                {
+                  icon: <FaCocktail size={36} />,
+                  title: "Breakfast",
+                  subtitle: "Rise & Shine",
+                  description: "Start your day with our stacked breakfasts",
+                  color: "#D4A574",
+                },
+                {
+                  icon: <FaUtensils size={36} />,
+                  title: "Lunch",
+                  subtitle: "The Lunch Barrel",
+                  description: "Perfect midday meals to keep you going",
+                  color: "#8B2635",
+                },
+                {
+                  icon: <FaStar size={36} />,
+                  title: "Dinner",
+                  subtitle: "Rolling Nights",
+                  description: "Sizzling dinners for memorable evenings",
+                  color: "#5D1A23",
+                },
+              ].map((menu, index) => (
+                <Grid size={{ xs: 12, sm: 4 }} key={index}>
+                  <motion.div variants={staggerItem} whileHover={{ y: -10 }}>
+                    <Card
+                      component={Link}
+                      to="/menu"
+                      sx={{
+                        p: 4,
+                        textAlign: "center",
+                        textDecoration: "none",
+                        height: "100%",
+                        border: "2px solid",
+                        borderColor: "divider",
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          borderColor: menu.color,
+                          boxShadow: `0 15px 40px ${menu.color}30`,
+                        },
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 80,
+                          height: 80,
+                          borderRadius: "50%",
+                          bgcolor: `${menu.color}15`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          mx: "auto",
+                          mb: 3,
+                          color: menu.color,
+                        }}
+                      >
+                        {menu.icon}
+                      </Box>
+                      <Typography
+                        variant="h5"
+                        sx={{ fontWeight: 700, color: "text.primary", mb: 0.5 }}
+                      >
+                        {menu.title}
+                      </Typography>
+                      <Typography
+                        variant="subtitle1"
+                        sx={{ color: menu.color, fontWeight: 600, mb: 1 }}
+                      >
+                        {menu.subtitle}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {menu.description}
+                      </Typography>
+                    </Card>
+                  </motion.div>
+                </Grid>
+              ))}
+            </Grid>
+
+            <Box sx={{ textAlign: "center", mt: 5 }}>
+              <motion.div
+                variants={fadeInUp}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  component={Link}
+                  to="/menu"
+                  variant="outlined"
+                  size="large"
+                  endIcon={<FiChevronRight />}
+                  sx={{
+                    py: 1.5,
+                    px: 4,
+                  }}
+                >
+                  View Full Menu
                 </Button>
               </motion.div>
             </Box>
@@ -721,16 +1000,34 @@ const Home = () => {
                     warm hospitality and delicious cuisine in person.
                   </Typography>
                   <Box sx={{ mb: 3 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                      📍 Address
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 600,
+                        mb: 1,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                      }}
+                    >
+                      <FiMapPin size={20} /> Address
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
                       {RESTAURANT_INFO.address.full}
                     </Typography>
                   </Box>
                   <Box sx={{ mb: 4 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                      📞 Phone
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontWeight: 600,
+                        mb: 1,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                      }}
+                    >
+                      <FiPhone size={20} /> Phone
                     </Typography>
                     <Typography variant="body1" color="text.secondary">
                       {RESTAURANT_INFO.phoneFormatted}

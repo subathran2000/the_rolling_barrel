@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { theme } from '@/theme';
+import { ThemeProvider, CssBaseline, GlobalStyles } from "@mui/material";
+import { theme, datePickerStyles } from "@/theme";
 import { Layout } from '@/components/layout';
 import { Home, About, Menu, Specials, Stories, Contact } from '@/pages';
 
@@ -8,6 +8,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <GlobalStyles styles={datePickerStyles} />
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
