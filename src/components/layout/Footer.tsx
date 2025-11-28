@@ -68,7 +68,7 @@ const Footer = () => {
                 <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
                   <Box
                     component="img"
-                    src="the-rolling-barrel-logo.webp"
+                    src="/the-rolling-barrel-logo.webp"
                     alt="The Rolling Barrel"
                     sx={{
                       width: 80,

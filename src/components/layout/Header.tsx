@@ -65,11 +65,13 @@ const Header = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         sx={{
-          bgcolor: isScrolled ? "rgba(255, 249, 245, 0.95)" : "transparent",
-          backdropFilter: isScrolled ? "blur(20px)" : "none",
+          bgcolor: isScrolled
+            ? "rgba(255, 249, 245, 0.95)"
+            : "rgba(255, 249, 245, 0.85)",
+          backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)",
           borderBottom: isScrolled
             ? "1px solid rgba(139, 38, 53, 0.1)"
-            : "none",
+            : "1px solid rgba(139, 38, 53, 0.05)",
           borderRadius: isScrolled ? "16px" : 0,
           boxShadow: isScrolled ? "0 4px 20px rgba(139, 38, 53, 0.1)" : "none",
           top: isScrolled ? 16 : 0,
@@ -112,7 +114,7 @@ const Header = () => {
             >
               <Box
                 component="img"
-                src="/the-rolling-barrel.svg"
+                src="/the-rolling-barrel.png"
                 alt="The Rolling Barrel"
                 sx={{
                   width: { xs: 50, md: 55 },
@@ -362,7 +364,7 @@ const Header = () => {
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <Box
               component="img"
-              src="/the-rolling-barrel.svg"
+              src="/the-rolling-barrel.png"
               alt="The Rolling Barrel"
               sx={{ width: 45, height: 45 }}
             />

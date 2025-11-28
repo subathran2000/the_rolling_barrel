@@ -53,8 +53,9 @@ export const NAV_LINKS = [
 ];
 
 export const MENU_CATEGORIES = [
-  { id: 'breakfast', label: 'Breakfast', path: '/menu/breakfast' },
-  { id: 'main', label: 'Main', path: '/menu/main' },
-  { id: 'drinks', label: 'Drinks', path: '/menu/drinks' },
-  { id: 'desserts', label: 'Desserts', path: '/menu/desserts' }
+  { id: "breakfast", label: "Breakfast", path: "/menu/breakfast" },
+  { id: "main", label: "Main Course", path: "/menu/main" },
+  { id: "drinks", label: "Drinks", path: "/menu/drinks" },
+  { id: "desserts", label: "Desserts", path: "/menu/desserts" },
+  { id: "kids", label: "Kids Menu", path: "/menu/kids" },
 ];

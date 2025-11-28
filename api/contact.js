@@ -239,10 +239,14 @@ The Rolling Barrel - Heart & Grill on Taunton Rd W
     <div class="content">
       <p>Hi ${name},</p>
       <p>Thank you for contacting The Rolling Barrel! We've received your message and will get back to you as soon as possible.</p>
-      ${subject === "Reservation" ? "<p><strong>Note:</strong> Your reservation request has been received. We will confirm your booking shortly. For urgent matters, please call us at (905) 743-0722.</p>" : ""}
+      ${
+        subject === "Reservation"
+          ? "<p><strong>Note:</strong> Your reservation request has been received. We will confirm your booking shortly. For urgent matters, please call us at (905) 743-0722.</p>"
+          : ""
+      }
       <p>In the meantime, feel free to:</p>
       <ul>
-        <li>Check out our <a href="https://rollingbarrel.ca/menu" style="color: #8B2635;">menu</a></li>
+        <li>Check out our <a href="https://the-rolling-barrel.vercel.app/menu" style="color: #8B2635;">menu</a></li>
         <li>Follow us on social media for daily specials</li>
         <li>Call us at <a href="tel:905-743-0722" style="color: #8B2635;">(905) 743-0722</a></li>
       </ul>

@@ -170,13 +170,14 @@ const Home = () => {
                     <Chip
                       label="Now Open for Dine-in & Delivery"
                       sx={{
-                        mb: 3,
+                        mb: { xs: 2, md: 3 },
+                        mt: { xs: -2, md: 0 },
                         py: 2.5,
                         px: 1,
                         bgcolor: "rgba(139, 38, 53, 0.1)",
                         color: "primary.main",
                         fontWeight: 600,
-                        fontSize: "0.9rem",
+                        fontSize: { xs: "0.8rem", sm: "0.9rem" },
                         "& .MuiChip-label": {
                           px: 2,
                         },
@@ -233,7 +234,13 @@ const Home = () => {
 
                   {/* CTA Buttons */}
                   <motion.div variants={fadeInUp}>
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexWrap: "nowrap",
+                        gap: { xs: 1.5, sm: 2 },
+                      }}
+                    >
                       <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -245,12 +252,18 @@ const Home = () => {
                           size="large"
                           endIcon={<FiChevronRight />}
                           sx={{
-                            py: 1.8,
-                            px: 4,
-                            fontSize: "1.1rem",
+                            py: { xs: 1.5, sm: 1.8 },
+                            px: { xs: 2.5, sm: 4 },
+                            fontSize: { xs: "0.95rem", sm: "1.1rem" },
                           }}
                         >
-                          View Our Menu
+                          <Box
+                            component="span"
+                            sx={{ display: { xs: "none", sm: "inline" } }}
+                          >
+                            View Our{" "}
+                          </Box>
+                          Menu
                         </Button>
                       </motion.div>
 
@@ -264,12 +277,12 @@ const Home = () => {
                           variant="outlined"
                           size="large"
                           sx={{
-                            py: 1.8,
-                            px: 4,
-                            fontSize: "1.1rem",
+                            py: { xs: 1.5, sm: 1.8 },
+                            px: { xs: 2.5, sm: 4 },
+                            fontSize: { xs: "0.95rem", sm: "1.1rem" },
                           }}
                         >
-                          Reserve a Table
+                          Reservation
                         </Button>
                       </motion.div>
                     </Box>
@@ -286,7 +299,7 @@ const Home = () => {
                       }}
                     >
                       {[
-                        { value: "50+", label: "Menu Items" },
+                        { value: "100+", label: "Menu Items" },
                         {
                           value: "4.8",
                           label: "Rating",
@@ -380,7 +393,7 @@ const Home = () => {
                     />
                     <Box
                       component={motion.img}
-                      src="/the-rolling-barrel.svg"
+                      src="/the-rolling-barrel.png"
                       alt="The Rolling Barrel"
                       animate={{
                         y: [0, -20, 0],
