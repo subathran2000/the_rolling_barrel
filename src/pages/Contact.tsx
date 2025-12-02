@@ -151,7 +151,9 @@ const Contact = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | { target: { name: string; value: string } }
   ) => {
     const { name, value } = e.target;
     setFormData({
@@ -199,7 +201,6 @@ const Contact = () => {
       }
     } catch (err) {
       setError("An error occurred. Please try calling us directly.");
-      console.error("Contact form error:", err);
     } finally {
       setLoading(false);
     }
@@ -215,8 +216,8 @@ const Contact = () => {
     {
       icon: <FiMail size={28} />,
       title: "Email",
-      content: "info@therollingbarrel.ca",
-      link: "mailto:info@therollingbarrel.ca",
+      content: RESTAURANT_INFO.email,
+      link: `mailto:${RESTAURANT_INFO.email}`,
     },
     {
       icon: <FiMapPin size={28} />,
@@ -632,7 +633,7 @@ const Contact = () => {
         }}
       >
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2869.8848839476366!2d-78.87738242346191!3d43.92543673469392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d51d0c6c4f6c7b%3A0x7a6f4c5b6c7c8d9e!2s462%20Taunton%20Rd%20W%2C%20Oshawa%2C%20ON%20L1L%200W1!5e0!3m2!1sen!2sca!4v1234567890"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2869.885!2d-78.8796!3d43.9254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s462+Taunton+Rd+W%2C+Oshawa%2C+ON+L1L+0W1%2C+Canada!5e0!3m2!1sen!2sca!4v1701500000000!5m2!1sen!2sca"
           width="100%"
           height="100%"
           style={{ border: 0 }}

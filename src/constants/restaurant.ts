@@ -4,6 +4,7 @@ export const RESTAURANT_INFO = {
   tagline: "Good Food. Great Vibes. Everyone's Welcome!",
   subtitle: "Heart & Grill on Taunton Rd W",
   website: "rollingbarrel.ca",
+  email: "info@therollingbarrel.ca",
   phone: "905-743-0722",
   phoneFormatted: "(905) 743-0722",
   address: {

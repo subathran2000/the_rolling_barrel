@@ -15,16 +15,27 @@ import {
   FaCheckCircle,
   FaInstagram,
   FaFacebook,
+  FaGlassCheers,
+  FaTrophy,
+  FaHandshake,
+  FaHeart,
 } from "react-icons/fa";
 import { fadeInUp, staggerContainer, staggerItem } from "@/utils";
 import { useInView } from "@/hooks";
 import { RESTAURANT_INFO } from "@/constants";
 
+const highlightIcons: Record<string, React.ReactNode> = {
+  party: <FaGlassCheers size={40} />,
+  trophy: <FaTrophy size={40} />,
+  handshake: <FaHandshake size={40} />,
+  heart: <FaHeart size={40} />,
+};
+
 const testimonials = [
   {
     id: 1,
     name: "Sarah Thompson",
-    avatar: "👩",
+    avatar: "ST",
     rating: 5,
     review:
       "Absolutely amazing food! The Barrel Burger is the best burger I've ever had. The atmosphere is cozy and the staff is incredibly friendly. This has become our go-to spot for family dinners.",
@@ -34,7 +45,7 @@ const testimonials = [
   {
     id: 2,
     name: "Michael Chen",
-    avatar: "👨",
+    avatar: "MC",
     rating: 5,
     review:
       "The Sunday brunch special is unbeatable! Unlimited mimosas and the eggs benedict are perfectly cooked. Great value for money and the service is always top-notch.",
@@ -44,7 +55,7 @@ const testimonials = [
   {
     id: 3,
     name: "Emily Rodriguez",
-    avatar: "👩‍🦱",
+    avatar: "ER",
     rating: 5,
     review:
       "I'm a regular here and for good reason. The chef's specials never disappoint, and they always accommodate my dietary restrictions without any fuss. Love this place!",
@@ -54,7 +65,7 @@ const testimonials = [
   {
     id: 4,
     name: "David Williams",
-    avatar: "👨‍🦰",
+    avatar: "DW",
     rating: 5,
     review:
       "Celebrated my anniversary here and it was perfect. The ambiance, the food, the service - everything exceeded our expectations. The seafood platter is a must-try!",
@@ -64,7 +75,7 @@ const testimonials = [
   {
     id: 5,
     name: "Lisa Park",
-    avatar: "👩‍🦳",
+    avatar: "LP",
     rating: 5,
     review:
       "Best restaurant in Oshawa, hands down! The tiramisu is heavenly and their coffee is amazing. Such a warm and welcoming place. We drive 30 minutes just to eat here!",
@@ -74,7 +85,7 @@ const testimonials = [
   {
     id: 6,
     name: "James Morrison",
-    avatar: "🧔",
+    avatar: "JM",
     rating: 5,
     review:
       "The Rolling Barrel has become my office's favorite lunch spot. Quick service, generous portions, and the prices are very reasonable for the quality you get.",
@@ -85,27 +96,27 @@ const testimonials = [
 
 const highlights = [
   {
-    emoji: "🎉",
+    icon: "party",
     title: "Grand Opening Success",
     description:
       "Over 500 guests joined us for our grand opening celebration. Thank you Oshawa!",
     date: "January 2024",
   },
   {
-    emoji: "🏆",
+    icon: "trophy",
     title: "Best New Restaurant Award",
     description: "Voted Best New Restaurant by Oshawa This Week readers.",
     date: "March 2024",
   },
   {
-    emoji: "🤝",
+    icon: "handshake",
     title: "Community Partnership",
     description:
       "Proud to partner with local farms for fresh, sustainable ingredients.",
     date: "Ongoing",
   },
   {
-    emoji: "❤️",
+    icon: "heart",
     title: "Charity Night",
     description:
       "Raised $5,000 for local food banks during our charity dinner event.",
@@ -267,8 +278,10 @@ const Stories = () => {
                             sx={{
                               width: 56,
                               height: 56,
-                              fontSize: "1.8rem",
-                              bgcolor: "rgba(139, 38, 53, 0.1)",
+                              fontSize: "1rem",
+                              fontWeight: 700,
+                              bgcolor: "primary.main",
+                              color: "primary.contrastText",
                             }}
                           >
                             {testimonial.avatar}
@@ -284,14 +297,6 @@ const Stories = () => {
                               <Typography variant="h6" sx={{ fontWeight: 700 }}>
                                 {testimonial.name}
                               </Typography>
-                              {testimonial.verified && (
-                                <FaCheckCircle
-                                  style={{
-                                    fontSize: 18,
-                                    color: "var(--mui-palette-primary-main)",
-                                  }}
-                                />
-                              )}
                               {testimonial.verified && (
                                 <FaCheckCircle
                                   style={{
@@ -393,17 +398,14 @@ const Stories = () => {
                         },
                       }}
                     >
-                      <motion.span
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        style={{
-                          fontSize: "3rem",
-                          display: "block",
-                          marginBottom: 16,
+                      <Box
+                        sx={{
+                          color: "primary.main",
+                          mb: 2,
                         }}
                       >
-                        {highlight.emoji}
-                      </motion.span>
+                        {highlightIcons[highlight.icon]}
+                      </Box>
                       <Chip
                         label={highlight.date}
                         size="small"

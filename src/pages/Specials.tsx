@@ -2,9 +2,40 @@ import { Box, Container, Typography, Grid, Card, CardContent, Chip, Button } fro
 import { motion } from 'framer-motion';
 import { Link } from "react-router-dom";
 import { FiClock } from "react-icons/fi";
-import { FaTag, FaStar } from "react-icons/fa";
+import {
+  FaTag,
+  FaStar,
+  FaDrumstickBite,
+  FaFish,
+  FaHamburger,
+  FaBirthdayCake,
+  FaCocktail,
+  FaUtensils,
+  FaPizzaSlice,
+  FaWineGlassAlt,
+} from "react-icons/fa";
+import { GiChickenLeg, GiSteak, GiShrimp } from "react-icons/gi";
 import { fadeInUp, staggerContainer, staggerItem } from "@/utils";
 import { useInView } from "@/hooks";
+
+const specialIcons: Record<string, React.ReactNode> = {
+  steak: <GiSteak size={48} />,
+  seafood: <GiShrimp size={48} />,
+  brunch: <FaCocktail size={48} />,
+  burger: <FaHamburger size={48} />,
+  chicken: <GiChickenLeg size={48} />,
+  dessert: <FaBirthdayCake size={48} />,
+};
+
+const weeklyIcons: Record<string, React.ReactNode> = {
+  pasta: <FaPizzaSlice size={28} />,
+  taco: <FaUtensils size={28} />,
+  wings: <FaDrumstickBite size={28} />,
+  comfort: <GiChickenLeg size={28} />,
+  fish: <FaFish size={28} />,
+  date: <FaWineGlassAlt size={28} />,
+  brunch: <FaCocktail size={28} />,
+};
 
 const specials = [
   {
@@ -14,7 +45,7 @@ const specials = [
       "Premium 14oz ribeye with truffle butter, roasted garlic mashed potatoes, and grilled asparagus",
     originalPrice: "$42.99",
     specialPrice: "$34.99",
-    image: "🥩",
+    icon: "steak",
     available: "Friday & Saturday Only",
     badge: "Limited Time",
   },
@@ -25,7 +56,7 @@ const specials = [
       "Lobster tail, grilled shrimp, pan-seared scallops, and calamari with lemon butter sauce",
     originalPrice: "$68.99",
     specialPrice: "$54.99",
-    image: "🦞",
+    icon: "seafood",
     available: "Weekends",
     badge: "Best Seller",
   },
@@ -36,7 +67,7 @@ const specials = [
       "Unlimited mimosas with any brunch entree. Includes eggs benedict, pancakes, or avocado toast",
     originalPrice: "$32.99",
     specialPrice: "$24.99",
-    image: "🥂",
+    icon: "brunch",
     available: "Sundays 10am-2pm",
     badge: "Weekend Special",
   },
@@ -47,7 +78,7 @@ const specials = [
       "Signature Barrel Burger with fries and a craft beer or cocktail",
     originalPrice: "$28.99",
     specialPrice: "$19.99",
-    image: "🍔",
+    icon: "burger",
     available: "Mon-Thu 4pm-7pm",
     badge: "Happy Hour",
   },
@@ -58,7 +89,7 @@ const specials = [
       "Whole roasted chicken, ribs, corn on the cob, coleslaw, and cornbread. Feeds 4-5 people",
     originalPrice: "$89.99",
     specialPrice: "$69.99",
-    image: "🍗",
+    icon: "chicken",
     available: "Every Day",
     badge: "Family Deal",
   },
@@ -68,7 +99,7 @@ const specials = [
     description: "Any two desserts of your choice plus two specialty coffees",
     originalPrice: "$28.99",
     specialPrice: "$19.99",
-    image: "🍰",
+    icon: "dessert",
     available: "After 8pm",
     badge: "Sweet Deal",
   },
@@ -78,37 +109,37 @@ const weeklySpecials = [
   {
     day: "Monday",
     special: "Pasta Night - 20% off all pasta dishes",
-    emoji: "🍝",
+    icon: "pasta",
   },
   {
     day: "Tuesday",
     special: "Taco Tuesday - $3 tacos & $5 margaritas",
-    emoji: "🌮",
+    icon: "taco",
   },
   {
     day: "Wednesday",
     special: "Wing Wednesday - Half-price wings",
-    emoji: "🍗",
+    icon: "wings",
   },
   {
     day: "Thursday",
     special: "Throwback Thursday - Classic comfort foods",
-    emoji: "🍖",
+    icon: "comfort",
   },
   {
     day: "Friday",
     special: "Fish Friday - Fresh catch of the day",
-    emoji: "🐟",
+    icon: "fish",
   },
   {
     day: "Saturday",
     special: "Date Night - Couples dinner special",
-    emoji: "💑",
+    icon: "date",
   },
   {
     day: "Sunday",
     special: "Brunch Bonanza - All-day brunch menu",
-    emoji: "🥞",
+    icon: "brunch",
   },
 ];
 
@@ -131,32 +162,6 @@ const Specials = () => {
           overflow: "hidden",
         }}
       >
-        {/* Animated background elements */}
-        {[...Array(6)].map((_, i) => (
-          <Box
-            key={i}
-            component={motion.div}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{
-              duration: 3 + i,
-              repeat: Infinity,
-              delay: i * 0.5,
-            }}
-            sx={{
-              position: "absolute",
-              top: `${20 + i * 12}%`,
-              left: `${10 + i * 15}%`,
-              fontSize: { xs: "2rem", md: "3rem" },
-              pointerEvents: "none",
-            }}
-          >
-            {["⭐", "🔥", "✨", "💫", "🌟", "⚡"][i]}
-          </Box>
-        ))}
-
         <Container maxWidth="md">
           <motion.div
             initial="hidden"
@@ -289,21 +294,16 @@ const Specials = () => {
                       />
 
                       <CardContent sx={{ p: 4 }}>
-                        {/* Emoji Icon */}
+                        {/* Icon */}
                         <Box
                           sx={{
-                            fontSize: "4rem",
                             mb: 2,
                             display: "flex",
                             justifyContent: "center",
+                            color: "primary.main",
                           }}
                         >
-                          <motion.span
-                            animate={{ scale: [1, 1.1, 1] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          >
-                            {special.image}
-                          </motion.span>
+                          {specialIcons[special.icon]}
                         </Box>
 
                         <Typography
@@ -413,10 +413,7 @@ const Specials = () => {
 
             <Grid container spacing={3}>
               {weeklySpecials.map((item) => (
-                <Grid
-                  size={{ xs: 12, sm: 6, md: 4, lg: (12 / 7) * 2 }}
-                  key={item.day}
-                >
+                <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }} key={item.day}>
                   <motion.div
                     variants={staggerItem}
                     whileHover={{ scale: 1.05 }}
@@ -436,9 +433,9 @@ const Specials = () => {
                         },
                       }}
                     >
-                      <Typography sx={{ fontSize: "2rem", mb: 1 }}>
-                        {item.emoji}
-                      </Typography>
+                      <Box sx={{ color: "secondary.main", mb: 1 }}>
+                        {weeklyIcons[item.icon]}
+                      </Box>
                       <Typography
                         variant="h6"
                         sx={{ fontWeight: 700, mb: 1, color: "secondary.main" }}

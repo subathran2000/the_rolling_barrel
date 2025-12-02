@@ -4,17 +4,36 @@
 
 import nodemailer from "nodemailer";
 
+// Allowed origins for CORS - add your production domain
+const ALLOWED_ORIGINS = [
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  process.env.SITE_URL, // Set this in your environment variables
+].filter(Boolean);
+
+// Sanitize user input to prevent XSS in email HTML
+const sanitizeHtml = (str) => {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
 export default async function handler(req, res) {
-  // Enable CORS
+  // Enable CORS with restricted origins
+  const origin = req.headers.origin;
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
   res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-  );
+  res.setHeader("Access-Control-Allow-Methods", "POST,OPTIONS");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+    "Content-Type, Accept"
   );
 
   if (req.method === "OPTIONS") {
@@ -57,6 +76,17 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Invalid Canadian phone number" });
     }
 
+    // Sanitize all user inputs for HTML email
+    const safeName = sanitizeHtml(name);
+    const safeEmail = sanitizeHtml(email);
+    const safePhone = sanitizeHtml(phone);
+    const safeSubject = sanitizeHtml(subject);
+    const safeMessage = sanitizeHtml(message);
+    const safePosition = sanitizeHtml(position);
+    const safeDate = sanitizeHtml(date);
+    const safeTime = sanitizeHtml(time);
+    const safeGuests = sanitizeHtml(guests);
+
     // Create Gmail SMTP transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -66,7 +96,7 @@ export default async function handler(req, res) {
       },
     });
 
-    // Prepare email content
+    // Prepare email content (using sanitized values)
     let emailBody = `
 <!DOCTYPE html>
 <html>
@@ -98,34 +128,34 @@ export default async function handler(req, res) {
       <p style="margin: 10px 0 0 0; opacity: 0.9;">New Contact Form Submission</p>
     </div>
     <div class="content">
-      <p><span class="badge">${subject}</span></p>
+      <p><span class="badge">${safeSubject}</span></p>
       
       <div class="field">
         <div class="field-label">Name</div>
-        <div class="field-value">${name}</div>
+        <div class="field-value">${safeName}</div>
       </div>
       
       <div class="field">
         <div class="field-label">Email</div>
-        <div class="field-value"><a href="mailto:${email}" style="color: #8B2635;">${email}</a></div>
+        <div class="field-value"><a href="mailto:${safeEmail}" style="color: #8B2635;">${safeEmail}</a></div>
       </div>
       
       <div class="field">
         <div class="field-label">Phone</div>
-        <div class="field-value"><a href="tel:${phone}" style="color: #8B2635;">${phone}</a></div>
+        <div class="field-value"><a href="tel:${safePhone}" style="color: #8B2635;">${safePhone}</a></div>
       </div>`;
 
     // Add career-specific field
-    if (subject === "Career" && position) {
+    if (safeSubject === "Career" && safePosition) {
       emailBody += `
       <div class="field">
         <div class="field-label">Position Applying For</div>
-        <div class="field-value">${position}</div>
+        <div class="field-value">${safePosition}</div>
       </div>`;
     }
 
     // Add reservation-specific fields
-    if (subject === "Reservation" && date && time && guests) {
+    if (safeSubject === "Reservation" && safeDate && safeTime && safeGuests) {
       emailBody += `
       <div class="reservation-details">
         <h3>Reservation Details</h3>
@@ -135,11 +165,11 @@ export default async function handler(req, res) {
             <div class="label">Date</div>
           </div>
           <div class="detail-item">
-            <div class="value">${time}</div>
+            <div class="value">${safeTime}</div>
             <div class="label">Time</div>
           </div>
           <div class="detail-item">
-            <div class="value">${guests}</div>
+            <div class="value">${safeGuests}</div>
             <div class="label">Guests</div>
           </div>
         </div>
@@ -149,7 +179,7 @@ export default async function handler(req, res) {
     emailBody += `
       <div class="field" style="margin-top: 20px;">
         <div class="field-label">Message</div>
-        <div class="message-box">${message}</div>
+        <div class="message-box">${safeMessage}</div>
       </div>
     </div>
     <div class="footer">
@@ -160,52 +190,52 @@ export default async function handler(req, res) {
 </body>
 </html>`;
 
-    // Plain text version
+    // Plain text version (using sanitized values)
     let textContent = `
 New Contact Form Submission - The Rolling Barrel
 ================================================
 
-Subject: ${subject}
-Name: ${name}
-Email: ${email}
-Phone: ${phone}
+Subject: ${safeSubject}
+Name: ${safeName}
+Email: ${safeEmail}
+Phone: ${safePhone}
 `;
 
-    if (subject === "Career" && position) {
-      textContent += `Position Applying For: ${position}\n`;
+    if (safeSubject === "Career" && safePosition) {
+      textContent += `Position Applying For: ${safePosition}\n`;
     }
 
-    if (subject === "Reservation" && date && time && guests) {
+    if (safeSubject === "Reservation" && safeDate && safeTime && safeGuests) {
       textContent += `
 Reservation Details:
-- Date: ${date}
-- Time: ${time}
-- Number of Guests: ${guests}
+- Date: ${safeDate}
+- Time: ${safeTime}
+- Number of Guests: ${safeGuests}
 `;
     }
 
     textContent += `
 Message:
-${message}
+${safeMessage}
 
 ---
 The Rolling Barrel - Heart & Grill on Taunton Rd W
 462 Taunton Rd W, Oshawa, ON | (905) 743-0722
 `;
 
-    // Email subject line
-    let emailSubject = `[Rolling Barrel] ${subject}`;
-    if (subject === "Reservation") {
-      emailSubject = `[Rolling Barrel] New Reservation Request from ${name}`;
-    } else if (subject === "Career") {
-      emailSubject = `[Rolling Barrel] Job Application - ${position || "Position Not Specified"}`;
-    } else if (subject === "Catering") {
-      emailSubject = `[Rolling Barrel] Catering Inquiry from ${name}`;
+    // Email subject line (using sanitized values)
+    let emailSubject = `[Rolling Barrel] ${safeSubject}`;
+    if (safeSubject === "Reservation") {
+      emailSubject = `[Rolling Barrel] New Reservation Request from ${safeName}`;
+    } else if (safeSubject === "Career") {
+      emailSubject = `[Rolling Barrel] Job Application - ${safePosition || "Position Not Specified"}`;
+    } else if (safeSubject === "Catering") {
+      emailSubject = `[Rolling Barrel] Catering Inquiry from ${safeName}`;
     }
 
     // Send email to restaurant
     const mailOptions = {
-      from: `"The Rolling Barrel Website" <${process.env.GMAIL_USER}>`,
+      from: `"The Rolling Barrel" <${process.env.GMAIL_USER}>`,
       to: process.env.CONTACT_EMAIL || process.env.GMAIL_USER,
       replyTo: email,
       subject: emailSubject,
@@ -215,7 +245,7 @@ The Rolling Barrel - Heart & Grill on Taunton Rd W
 
     await transporter.sendMail(mailOptions);
 
-    // Send auto-reply to customer
+    // Send auto-reply to customer (using sanitized values)
     const autoReplyHtml = `
 <!DOCTYPE html>
 <html>
@@ -237,16 +267,16 @@ The Rolling Barrel - Heart & Grill on Taunton Rd W
       <p style="margin: 10px 0 0 0; opacity: 0.9;">Thank You for Reaching Out!</p>
     </div>
     <div class="content">
-      <p>Hi ${name},</p>
+      <p>Hi ${safeName},</p>
       <p>Thank you for contacting The Rolling Barrel! We've received your message and will get back to you as soon as possible.</p>
       ${
-        subject === "Reservation"
+        safeSubject === "Reservation"
           ? "<p><strong>Note:</strong> Your reservation request has been received. We will confirm your booking shortly. For urgent matters, please call us at (905) 743-0722.</p>"
           : ""
       }
       <p>In the meantime, feel free to:</p>
       <ul>
-        <li>Check out our <a href="https://the-rolling-barrel.vercel.app/menu" style="color: #8B2635;">menu</a></li>
+        <li>Check out our menu when you visit us</li>
         <li>Follow us on social media for daily specials</li>
         <li>Call us at <a href="tel:905-743-0722" style="color: #8B2635;">(905) 743-0722</a></li>
       </ul>
@@ -264,9 +294,9 @@ The Rolling Barrel - Heart & Grill on Taunton Rd W
 
     const autoReplyOptions = {
       from: `"The Rolling Barrel" <${process.env.GMAIL_USER}>`,
-      to: email,
+      to: email, // Use original email for delivery
       subject:
-        subject === "Reservation"
+        safeSubject === "Reservation"
           ? "Your Reservation Request - The Rolling Barrel"
           : "Thank You for Contacting The Rolling Barrel",
       html: autoReplyHtml,

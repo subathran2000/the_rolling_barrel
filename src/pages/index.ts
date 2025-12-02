@@ -4,3 +4,4 @@ export { default as Menu } from './Menu';
 export { default as Specials } from './Specials';
 export { default as Stories } from './Stories';
 export { default as Contact } from './Contact';
+export { default as NotFound } from "./NotFound";

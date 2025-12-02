@@ -1,6 +1,16 @@
-import { Box, Container, Typography, Grid, Card, CardContent } from '@mui/material';
-import { motion } from 'framer-motion';
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Button,
+} from "@mui/material";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { FaUtensils, FaUsers, FaTrophy, FaHeart } from "react-icons/fa";
+import { FiChevronRight } from "react-icons/fi";
 import { fadeInUp, staggerContainer, staggerItem } from "@/utils";
 import { useInView } from "@/hooks";
 
@@ -467,6 +477,44 @@ const About = () => {
               Join us for a meal and discover why our guests keep coming back.
               We can't wait to welcome you to our table.
             </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                justifyContent: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  component={Link}
+                  to="/menu"
+                  variant="contained"
+                  size="large"
+                  endIcon={<FiChevronRight />}
+                  sx={{ py: 1.5, px: 4 }}
+                >
+                  View Menu
+                </Button>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  component={Link}
+                  to="/contact?subject=Reservation"
+                  variant="outlined"
+                  size="large"
+                  sx={{ py: 1.5, px: 4 }}
+                >
+                  Make a Reservation
+                </Button>
+              </motion.div>
+            </Box>
           </motion.div>
         </Container>
       </Box>
