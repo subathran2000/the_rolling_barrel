@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
+import { HelmetProvider } from "@dr.pogodin/react-helmet";
 import {
   ThemeProvider,
   CssBaseline,

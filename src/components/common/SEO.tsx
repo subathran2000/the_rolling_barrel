@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import { Helmet } from "@dr.pogodin/react-helmet";
 import { RESTAURANT_INFO } from "@/constants";
 
 interface SEOProps {
