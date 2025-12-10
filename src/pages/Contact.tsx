@@ -561,9 +561,7 @@ const Contact = () => {
                             value={formData.position}
                             onChange={handleChange}
                             error={!!errors.position}
-                            helperText={
-                              errors.position
-                            }
+                            helperText={errors.position}
                             required
                           />
                         </Grid>
@@ -595,32 +593,11 @@ const Contact = () => {
                                   error: !!errors.date,
                                   helperText: errors.date,
                                   required: true,
-                                  sx: {
-                                    '& .MuiOutlinedInput-root': {
-                                      borderRadius: 4,
-                                      backgroundColor: 'rgba(255,255,255,0.03)',
-                                      '& fieldset': {
-                                        borderColor: 'rgba(255,255,255,0.12)'
-                                      },
-                                      '&:hover fieldset': {
-                                        borderColor: 'rgba(255,255,255,0.2)'
-                                      },
-                                      '&.Mui-focused fieldset': {
-                                        borderColor: 'rgba(255,255,255,0.5)',
-                                        borderWidth: '2px'
-                                      }
-                                    },
-                                    '& .MuiInputLabel-root': {
-                                      color: 'rgba(255,255,255,0.6)'
-                                    },
-                                    '& .MuiFormHelperText-root': {
-                                      color: 'rgba(255,255,255,0.5)'
-                                    }
-                                  }
                                 },
                               }}
                             />
                           </Grid>
+
                           <Grid size={{ xs: 12, sm: 4 }}>
                             <TimePicker
                               label="Time *"
@@ -643,32 +620,11 @@ const Contact = () => {
                                   error: !!errors.time,
                                   helperText: errors.time,
                                   required: true,
-                                  sx: {
-                                    '& .MuiOutlinedInput-root': {
-                                      borderRadius: 4,
-                                      backgroundColor: 'rgba(255,255,255,0.03)',
-                                      '& fieldset': {
-                                        borderColor: 'rgba(255,255,255,0.12)'
-                                      },
-                                      '&:hover fieldset': {
-                                        borderColor: 'rgba(255,255,255,0.2)'
-                                      },
-                                      '&.Mui-focused fieldset': {
-                                        borderColor: 'rgba(255,255,255,0.5)',
-                                        borderWidth: '2px'
-                                      }
-                                    },
-                                    '& .MuiInputLabel-root': {
-                                      color: 'rgba(255,255,255,0.6)'
-                                    },
-                                    '& .MuiFormHelperText-root': {
-                                      color: 'rgba(255,255,255,0.5)'
-                                    }
-                                  }
                                 },
                               }}
                             />
                           </Grid>
+
                           <Grid size={{ xs: 12, sm: 4 }}>
                             <TextField
                               fullWidth

@@ -270,19 +270,20 @@ const themeOptions: ThemeOptions = {
             transition: transitions.normal,
             backgroundColor: "rgba(255, 255, 255, 0.03)",
             "& fieldset": {
-              borderColor: "rgba(255, 255, 255, 0.1)",
+              borderColor: "rgba(255, 255, 255, 0.35)",
+              borderWidth: "1px",
               transition: transitions.fast,
             },
             "&:hover": {
               boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
               "& fieldset": {
-                borderColor: "rgba(255, 255, 255, 0.25)",
+                borderColor: "rgba(255, 255, 255, 0.7)",
               },
             },
             "&.Mui-focused": {
               boxShadow: "0 4px 20px rgba(0, 0, 0, 0.4)",
               "& fieldset": {
-                borderColor: "rgba(255, 255, 255, 0.5)",
+                borderColor: "#FFFFFF",
                 borderWidth: "2px",
               },
             },
