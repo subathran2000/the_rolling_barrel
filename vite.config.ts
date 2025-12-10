@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,6 +13,8 @@ export default defineConfig({
     port: 3000,
   },
   build: {
+    target: "es2015",
+    minify: "esbuild",
     rollupOptions: {
       output: {
         manualChunks: {
@@ -20,10 +22,12 @@ export default defineConfig({
           "vendor-mui": ["@mui/material", "@emotion/react", "@emotion/styled"],
           "vendor-icons": ["react-icons"],
           "vendor-motion": ["framer-motion"],
+          "vendor-three": ["three", "@react-three/fiber", "@react-three/drei"],
         },
       },
     },
     chunkSizeWarningLimit: 1000,
+    sourcemap: false,
   },
   resolve: {
     alias: {

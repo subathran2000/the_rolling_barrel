@@ -309,7 +309,12 @@ The Rolling Barrel - Heart & Grill on Taunton Rd W
       message: "Thank you! Your message has been received.",
     });
   } catch (error) {
-    console.error("Contact form error:", error);
+    // Log error in production without exposing sensitive details
+    if (process.env.NODE_ENV === "production") {
+      console.error("Contact form submission failed:", error.message);
+    } else {
+      console.error("Contact form error:", error);
+    }
     return res.status(500).json({
       error:
         "An error occurred while processing your request. Please try again or call us directly at (905) 743-0722.",
