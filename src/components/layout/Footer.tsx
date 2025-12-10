@@ -1,5 +1,13 @@
-import { Box, Container, Typography, IconButton, Link as MuiLink, Grid, Divider } from '@mui/material';
-import { motion } from 'framer-motion';
+import {
+  Box,
+  Container,
+  Typography,
+  IconButton,
+  Link as MuiLink,
+  Grid,
+  Divider,
+} from "@mui/material";
+import { motion } from "framer-motion";
 import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 import { FiPhone, FiMapPin } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -15,12 +23,22 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        bgcolor: "primary.dark",
-        color: "primary.contrastText",
+        bgcolor: "#0A0A0A",
+        color: "#FFFFFF",
         pt: { xs: 6, md: 10 },
         pb: 4,
         position: "relative",
         overflow: "hidden",
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "1px",
+          background:
+            "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)",
+        },
       }}
     >
       {/* Decorative elements */}
@@ -68,12 +86,12 @@ const Footer = () => {
                 <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
                   <Box
                     component="img"
-                    src="/the-rolling-barrel-logo.webp"
+                    src="/the-rolling-barrel-logo.png"
                     alt="The Rolling Barrel"
                     sx={{
                       width: 80,
                       height: 80,
-                      objectFit: "fill",
+                      objectFit: "contain",
                     }}
                   />
                 </Box>
@@ -83,7 +101,7 @@ const Footer = () => {
                     fontWeight: 800,
                     mb: 2,
                     background:
-                      "linear-gradient(135deg, #FFF5E6 0%, #D4A574 100%)",
+                      "linear-gradient(135deg, #FFFFFF 0%, #888888 100%)",
                     backgroundClip: "text",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
@@ -94,7 +112,8 @@ const Footer = () => {
                 <Typography
                   variant="body2"
                   sx={{
-                    opacity: 0.8,
+                    color: "#FFFFFF",
+                    opacity: 0.7,
                     maxWidth: 280,
                     mx: "auto",
                     lineHeight: 1.8,
@@ -111,7 +130,7 @@ const Footer = () => {
               <motion.div variants={staggerItem}>
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: 700, mb: 3, color: "secondary.main" }}
+                  sx={{ fontWeight: 700, mb: 3, color: "#FFFFFF" }}
                 >
                   Quick Links
                 </Typography>
@@ -129,13 +148,12 @@ const Footer = () => {
                       component={Link}
                       to={link.path}
                       sx={{
-                        color: "primary.contrastText",
+                        color: "#FFFFFF",
                         opacity: 0.8,
                         textDecoration: "none",
                         transition: "all 0.2s ease",
                         "&:hover": {
                           opacity: 1,
-                          color: "secondary.main",
                           pl: 1,
                         },
                       }}
@@ -152,7 +170,7 @@ const Footer = () => {
               <motion.div variants={staggerItem}>
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: 700, mb: 3, color: "secondary.main" }}
+                  sx={{ fontWeight: 700, mb: 3, color: "#FFFFFF" }}
                 >
                   Contact Us
                 </Typography>
@@ -165,16 +183,14 @@ const Footer = () => {
                   }}
                 >
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                    <FiPhone
-                      size={20}
-                      style={{ color: "var(--mui-palette-secondary-main)" }}
-                    />
+                    <FiPhone size={20} style={{ color: "#FFFFFF" }} />
                     <MuiLink
                       href={`tel:${RESTAURANT_INFO.phone}`}
                       sx={{
-                        color: "primary.contrastText",
+                        color: "#FFFFFF",
                         textDecoration: "none",
-                        "&:hover": { color: "secondary.main" },
+                        opacity: 0.8,
+                        "&:hover": { opacity: 1 },
                       }}
                     >
                       {RESTAURANT_INFO.phoneFormatted}
@@ -186,7 +202,7 @@ const Footer = () => {
                     <FiMapPin
                       size={20}
                       style={{
-                        color: "var(--mui-palette-secondary-main)",
+                        color: "#FFFFFF",
                         marginTop: 3,
                       }}
                     />
@@ -195,10 +211,11 @@ const Footer = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       sx={{
-                        color: "primary.contrastText",
+                        color: "#FFFFFF",
                         textDecoration: "none",
                         lineHeight: 1.6,
-                        "&:hover": { color: "secondary.main" },
+                        opacity: 0.8,
+                        "&:hover": { opacity: 1 },
                       }}
                     >
                       {RESTAURANT_INFO.address.street}
@@ -216,9 +233,9 @@ const Footer = () => {
               <motion.div variants={staggerItem}>
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: 700, mb: 3, color: "secondary.main" }}
+                  sx={{ fontWeight: 700, mb: 3, color: "#FFFFFF" }}
                 >
-                  Order Online
+                  Delivery & Pickup
                 </Typography>
                 <Box
                   sx={{
@@ -233,13 +250,39 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
-                      color: "primary.contrastText",
+                      color: "#FFFFFF",
                       opacity: 0.8,
                       textDecoration: "none",
-                      "&:hover": { opacity: 1, color: "secondary.main" },
+                      "&:hover": { opacity: 1, color: "#FFFFFF" },
                     }}
                   >
                     Uber Eats
+                  </MuiLink>
+                  <MuiLink
+                    href={RESTAURANT_INFO.delivery.doorDash}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      color: "#FFFFFF",
+                      opacity: 0.8,
+                      textDecoration: "none",
+                      "&:hover": { opacity: 1, color: "#FFFFFF" },
+                    }}
+                  >
+                    DoorDash
+                  </MuiLink>
+                  <MuiLink
+                    href={RESTAURANT_INFO.delivery.directOrder}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      color: "#FFFFFF",
+                      opacity: 0.8,
+                      textDecoration: "none",
+                      "&:hover": { opacity: 1, color: "#FFFFFF" },
+                    }}
+                  >
+                    Direct Order
                   </MuiLink>
                 </Box>
               </motion.div>
@@ -286,14 +329,13 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     aria-label={social.label}
                     sx={{
-                      color: "primary.contrastText",
-                      bgcolor: "rgba(255, 255, 255, 0.1)",
+                      color: "#FFFFFF",
+                      bgcolor: "rgba(255, 255, 255, 0.08)",
                       width: 48,
                       height: 48,
                       transition: "all 0.3s ease",
                       "&:hover": {
-                        bgcolor: "secondary.main",
-                        color: "primary.dark",
+                        bgcolor: "rgba(255, 255, 255, 0.2)",
                       },
                     }}
                   >
@@ -304,17 +346,25 @@ const Footer = () => {
             </Box>
           </motion.div>
 
-          <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.1)", my: 4 }} />
+          <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.08)", my: 4 }} />
 
           {/* Copyright */}
           <motion.div variants={fadeInUp}>
             <Box sx={{ textAlign: "center" }}>
-              <Typography variant="body2" sx={{ opacity: 0.6 }}>
+              <Typography
+                variant="body2"
+                sx={{ color: "#FFFFFF", opacity: 0.6 }}
+              >
                 © {currentYear} {RESTAURANT_INFO.name}. All rights reserved.
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ opacity: 0.5, mt: 1, fontSize: "0.875rem" }}
+                sx={{
+                  color: "#FFFFFF",
+                  opacity: 0.5,
+                  mt: 1,
+                  fontSize: "0.875rem",
+                }}
               >
                 Website by{" "}
                 <MuiLink
@@ -322,10 +372,12 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
-                    color: "secondary.main",
+                    color: "#FFFFFF",
                     textDecoration: "none",
                     fontWeight: 600,
+                    opacity: 0.7,
                     "&:hover": {
+                      opacity: 1,
                       textDecoration: "underline",
                     },
                   }}

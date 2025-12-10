@@ -1,500 +1,590 @@
-import { Box, Container, Typography, Grid, Card, CardContent, Chip, Button } from '@mui/material';
-import { motion } from 'framer-motion';
-import { Link } from "react-router-dom";
-import { FiClock } from "react-icons/fi";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  Chip,
+} from "@mui/material";
+import { motion } from "framer-motion";
+import { SEO, FloatingElements } from "@/components/common";
+import Scene3D from "@/components/3d/Scene";
 import {
   FaTag,
-  FaStar,
   FaDrumstickBite,
   FaFish,
   FaHamburger,
-  FaBirthdayCake,
   FaCocktail,
   FaUtensils,
   FaPizzaSlice,
-  FaWineGlassAlt,
+  FaFootballBall,
+  FaBasketballBall,
+  FaBaseballBall,
+  FaHockeyPuck,
 } from "react-icons/fa";
-import { GiChickenLeg, GiSteak, GiShrimp } from "react-icons/gi";
+import { GiChickenLeg, GiSteak, GiTacos } from "react-icons/gi";
 import { fadeInUp, staggerContainer, staggerItem } from "@/utils";
 import { useInView } from "@/hooks";
 
-const specialIcons: Record<string, React.ReactNode> = {
-  steak: <GiSteak size={48} />,
-  seafood: <GiShrimp size={48} />,
-  brunch: <FaCocktail size={48} />,
-  burger: <FaHamburger size={48} />,
-  chicken: <GiChickenLeg size={48} />,
-  dessert: <FaBirthdayCake size={48} />,
+type SpecialItem = {
+  name: string;
+  price: string;
+  icon: string;
+  note?: string;
 };
 
 const weeklyIcons: Record<string, React.ReactNode> = {
-  pasta: <FaPizzaSlice size={28} />,
-  taco: <FaUtensils size={28} />,
-  wings: <FaDrumstickBite size={28} />,
-  comfort: <GiChickenLeg size={28} />,
-  fish: <FaFish size={28} />,
-  date: <FaWineGlassAlt size={28} />,
-  brunch: <FaCocktail size={28} />,
+  wings: <FaDrumstickBite size={32} />,
+  chicken: <GiChickenLeg size={32} />,
+  tacos: <GiTacos size={32} />,
+  burger: <FaHamburger size={32} />,
+  wraps: <FaUtensils size={32} />,
+  fish: <FaFish size={32} />,
+  steak: <GiSteak size={32} />,
+  pasta: <FaPizzaSlice size={32} />,
+  breakfast: <FaCocktail size={32} />,
 };
 
-const specials = [
-  {
-    id: 1,
-    name: "Chef's Special Steak",
-    description:
-      "Premium 14oz ribeye with truffle butter, roasted garlic mashed potatoes, and grilled asparagus",
-    originalPrice: "$42.99",
-    specialPrice: "$34.99",
-    icon: "steak",
-    available: "Friday & Saturday Only",
-    badge: "Limited Time",
-  },
-  {
-    id: 2,
-    name: "Seafood Platter for Two",
-    description:
-      "Lobster tail, grilled shrimp, pan-seared scallops, and calamari with lemon butter sauce",
-    originalPrice: "$68.99",
-    specialPrice: "$54.99",
-    icon: "seafood",
-    available: "Weekends",
-    badge: "Best Seller",
-  },
-  {
-    id: 3,
-    name: "Sunday Brunch Special",
-    description:
-      "Unlimited mimosas with any brunch entree. Includes eggs benedict, pancakes, or avocado toast",
-    originalPrice: "$32.99",
-    specialPrice: "$24.99",
-    icon: "brunch",
-    available: "Sundays 10am-2pm",
-    badge: "Weekend Special",
-  },
-  {
-    id: 4,
-    name: "Happy Hour Burger Deal",
-    description:
-      "Signature Barrel Burger with fries and a craft beer or cocktail",
-    originalPrice: "$28.99",
-    specialPrice: "$19.99",
-    icon: "burger",
-    available: "Mon-Thu 4pm-7pm",
-    badge: "Happy Hour",
-  },
-  {
-    id: 5,
-    name: "Family Feast",
-    description:
-      "Whole roasted chicken, ribs, corn on the cob, coleslaw, and cornbread. Feeds 4-5 people",
-    originalPrice: "$89.99",
-    specialPrice: "$69.99",
-    icon: "chicken",
-    available: "Every Day",
-    badge: "Family Deal",
-  },
-  {
-    id: 6,
-    name: "Dessert Duo",
-    description: "Any two desserts of your choice plus two specialty coffees",
-    originalPrice: "$28.99",
-    specialPrice: "$19.99",
-    icon: "dessert",
-    available: "After 8pm",
-    badge: "Sweet Deal",
-  },
-];
-
-const weeklySpecials = [
+const weeklySpecials: { day: string; items: SpecialItem[] }[] = [
   {
     day: "Monday",
-    special: "Pasta Night - 20% off all pasta dishes",
-    icon: "pasta",
+    items: [
+      { name: "Wings", price: "80¢", icon: "wings" },
+      { name: "Chicken or Pork Souvlaki", price: "$18", icon: "chicken" },
+    ],
   },
   {
     day: "Tuesday",
-    special: "Taco Tuesday - $3 tacos & $5 margaritas",
-    icon: "taco",
+    items: [
+      { name: "Tacos", price: "$4.50", icon: "tacos" },
+      { name: "Tequila", price: "$4.50", icon: "tacos" },
+    ],
   },
   {
     day: "Wednesday",
-    special: "Wing Wednesday - Half-price wings",
-    icon: "wings",
+    items: [{ name: "Any Burger & Fries", price: "$10", icon: "burger" }],
   },
   {
     day: "Thursday",
-    special: "Throwback Thursday - Classic comfort foods",
-    icon: "comfort",
+    items: [{ name: "Wraps & Fries", price: "$12", icon: "wraps" }],
   },
   {
     day: "Friday",
-    special: "Fish Friday - Fresh catch of the day",
-    icon: "fish",
+    items: [
+      { name: "2 Pc Fish & Chips", price: "$14", icon: "fish" },
+      { name: "Rib & Wing Combo", price: "$18", icon: "wings" },
+    ],
   },
   {
     day: "Saturday",
-    special: "Date Night - Couples dinner special",
-    icon: "date",
+    items: [
+      { name: "Steak & Wings", price: "$28", icon: "steak" },
+      { name: "Steak & Lobster Tail", price: "$28", icon: "steak" },
+    ],
   },
   {
     day: "Sunday",
-    special: "Brunch Bonanza - All-day brunch menu",
-    icon: "brunch",
+    items: [
+      {
+        name: "Any Pasta",
+        price: "$14",
+        note: "(Excluding seafood pastas)",
+        icon: "pasta",
+      },
+    ],
   },
 ];
 
+const brunchSpecials = [
+  { name: "Classic Breakfast", price: "$8" },
+  { name: "Buttermilk Pancakes", price: "$8" },
+  { name: "French Toast Stack", price: "$8" },
+  { name: "French Toast Combo", price: "$8" },
+];
+
+const gameTimeSpecial = {
+  title: "Game Time Specials",
+  description: "30% off appetizers | 80¢ wings",
+  teams: [
+    { name: "Toronto Raptors", icon: <FaBasketballBall size={24} /> },
+    { name: "Toronto Blue Jays", icon: <FaBaseballBall size={24} /> },
+    { name: "NFL", icon: <FaFootballBall size={24} /> },
+    { name: "Toronto Maple Leafs", icon: <FaHockeyPuck size={24} /> },
+  ],
+};
+
 const Specials = () => {
   const { ref: specialsRef, isInView: specialsInView } = useInView();
-  const { ref: weeklyRef, isInView: weeklyInView } = useInView();
+  const { ref: brunchRef, isInView: brunchInView } = useInView();
+  const { ref: gameRef, isInView: gameInView } = useInView();
 
   return (
-    <Box sx={{ overflow: "hidden" }}>
-      {/* Hero Section */}
-      <Box
-        sx={{
-          py: { xs: 12, md: 20 },
-          background: `
-            radial-gradient(ellipse at 50% 50%, rgba(139, 38, 53, 0.15) 0%, transparent 60%),
-            linear-gradient(180deg, #FFF9F5 0%, #FFFFFF 100%)
+    <>
+      <SEO
+        title="Specials"
+        description="Discover our daily specials and weekly featured dishes. Amazing deals on authentic food at The Rolling Barrel."
+      />
+      <Box sx={{ overflowX: "hidden" }}>
+        <Box
+          sx={{
+            py: { xs: 12, md: 20 },
+            background: `
+            radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 60%),
+            linear-gradient(180deg, #0A0A0A 0%, #050505 100%)
           `,
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <Container maxWidth="md">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp}>
-              <Chip
-                icon={<FaTag />}
-                label="Limited Time Offers"
-                sx={{
-                  mb: 3,
-                  py: 2.5,
-                  px: 2,
-                  bgcolor: "primary.main",
-                  color: "white",
-                  fontWeight: 600,
-                  fontSize: "0.9rem",
-                  "& .MuiChip-icon": { color: "white" },
-                }}
-              />
-            </motion.div>
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="h1"
-                sx={{
-                  mb: 3,
-                  background:
-                    "linear-gradient(135deg, #8B2635 0%, #5D1A23 50%, #D4A574 100%)",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                Today's Specials
-              </Typography>
-            </motion.div>
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="h5"
-                sx={{
-                  color: "text.secondary",
-                  maxWidth: 600,
-                  mx: "auto",
-                  fontWeight: 400,
-                  lineHeight: 1.6,
-                }}
-              >
-                Exclusive deals and seasonal favorites crafted by our chef.
-                Don't miss these incredible offers!
-              </Typography>
-            </motion.div>
-          </motion.div>
-        </Container>
-      </Box>
-
-      {/* Featured Specials */}
-      <Box
-        ref={specialsRef}
-        sx={{
-          py: { xs: 8, md: 12 },
-          bgcolor: "background.paper",
-        }}
-      >
-        <Container maxWidth="lg">
-          <motion.div
-            initial="hidden"
-            animate={specialsInView ? "visible" : "hidden"}
-            variants={staggerContainer}
-          >
-            <Box sx={{ textAlign: "center", mb: 8 }}>
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
+            minHeight: { xs: "auto", md: "60vh" },
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Scene3D variant="ambient" intensity={0.7} />
+          <FloatingElements variant="light" density="dense" />
+          <Container maxWidth="md">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+            >
+              <motion.div variants={fadeInUp}>
+                <Chip
+                  icon={<FaTag />}
+                  label="Amazing Deals"
+                  sx={{
+                    mb: 3,
+                    py: 2.5,
+                    px: 2,
+                    bgcolor: "#FFFFFF",
+                    color: "#000000",
+                    fontWeight: 600,
+                    fontSize: "0.9rem",
+                    "& .MuiChip-icon": { color: "#000000" },
+                  }}
+                />
+              </motion.div>
               <motion.div variants={fadeInUp}>
                 <Typography
-                  variant="overline"
+                  variant="h1"
                   sx={{
-                    color: "primary.main",
-                    fontWeight: 600,
-                    letterSpacing: 3,
-                    mb: 2,
-                    display: "block",
+                    mb: 3,
+                    background:
+                      "linear-gradient(135deg, #FFFFFF 0%, #888888 100%)",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
                   }}
                 >
-                  FEATURED DEALS
+                  Our Specials
                 </Typography>
               </motion.div>
-              <motion.div variants={fadeInUp}>
-                <Typography variant="h2">
-                  Unmissable
-                  <Box component="span" sx={{ color: "primary.main" }}>
-                    {" "}
-                    Offers
-                  </Box>
-                </Typography>
-              </motion.div>
-            </Box>
-
-            <Grid container spacing={4}>
-              {specials.map((special) => (
-                <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={special.id}>
-                  <motion.div
-                    variants={staggerItem}
-                    whileHover={{ y: -10, scale: 1.02 }}
-                  >
-                    <Card
-                      sx={{
-                        height: "100%",
-                        position: "relative",
-                        overflow: "visible",
-                        border: "2px solid transparent",
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          borderColor: "primary.main",
-                          boxShadow: "0 20px 60px rgba(139, 38, 53, 0.2)",
-                        },
-                      }}
-                    >
-                      {/* Badge */}
-                      <Chip
-                        icon={<FaStar size={16} />}
-                        label={special.badge}
-                        sx={{
-                          position: "absolute",
-                          top: -12,
-                          right: 16,
-                          bgcolor: "primary.main",
-                          color: "white",
-                          fontWeight: 700,
-                          "& .MuiChip-icon": { color: "white" },
-                        }}
-                      />
-
-                      <CardContent sx={{ p: 4 }}>
-                        {/* Icon */}
-                        <Box
-                          sx={{
-                            mb: 2,
-                            display: "flex",
-                            justifyContent: "center",
-                            color: "primary.main",
-                          }}
-                        >
-                          {specialIcons[special.icon]}
-                        </Box>
-
-                        <Typography
-                          variant="h5"
-                          sx={{ fontWeight: 700, mb: 2, textAlign: "center" }}
-                        >
-                          {special.name}
-                        </Typography>
-
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          sx={{ mb: 3, textAlign: "center", lineHeight: 1.7 }}
-                        >
-                          {special.description}
-                        </Typography>
-
-                        {/* Pricing */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            gap: 2,
-                            mb: 3,
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              textDecoration: "line-through",
-                              color: "text.secondary",
-                              fontSize: "1.1rem",
-                            }}
-                          >
-                            {special.originalPrice}
-                          </Typography>
-                          <Typography
-                            variant="h4"
-                            sx={{
-                              color: "primary.main",
-                              fontWeight: 800,
-                            }}
-                          >
-                            {special.specialPrice}
-                          </Typography>
-                        </Box>
-
-                        {/* Availability */}
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: 1,
-                            color: "text.secondary",
-                          }}
-                        >
-                          <FiClock size={18} />
-                          <Typography variant="body2">
-                            {special.available}
-                          </Typography>
-                        </Box>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                </Grid>
-              ))}
-            </Grid>
-          </motion.div>
-        </Container>
-      </Box>
-
-      {/* Weekly Specials */}
-      <Box
-        ref={weeklyRef}
-        sx={{
-          py: { xs: 8, md: 12 },
-          background: "linear-gradient(135deg, #8B2635 0%, #5D1A23 100%)",
-          color: "white",
-        }}
-      >
-        <Container maxWidth="lg">
-          <motion.div
-            initial="hidden"
-            animate={weeklyInView ? "visible" : "hidden"}
-            variants={staggerContainer}
-          >
-            <Box sx={{ textAlign: "center", mb: 8 }}>
               <motion.div variants={fadeInUp}>
                 <Typography
-                  variant="overline"
+                  variant="h5"
                   sx={{
-                    color: "secondary.main",
-                    fontWeight: 600,
-                    letterSpacing: 3,
-                    mb: 2,
-                    display: "block",
+                    color: "text.secondary",
+                    maxWidth: 600,
+                    mx: "auto",
+                    fontWeight: 400,
+                    lineHeight: 1.6,
                   }}
                 >
-                  PLAN YOUR WEEK
+                  From weekly features to game-time offers and brunch delights
                 </Typography>
               </motion.div>
-              <motion.div variants={fadeInUp}>
-                <Typography variant="h2">Weekly Specials</Typography>
-              </motion.div>
-            </Box>
+            </motion.div>
+          </Container>
+        </Box>
 
-            <Grid container spacing={3}>
-              {weeklySpecials.map((item) => (
-                <Grid size={{ xs: 6, sm: 4, md: 3, lg: 2 }} key={item.day}>
-                  <motion.div
-                    variants={staggerItem}
-                    whileHover={{ scale: 1.05 }}
+        {/* Weekly Specials */}
+        <Box
+          ref={specialsRef}
+          sx={{
+            py: { xs: 8, md: 12 },
+            bgcolor: "background.paper",
+            position: "relative",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              inset: 0,
+              background:
+                "radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 50%)",
+              pointerEvents: "none",
+            },
+          }}
+        >
+          <Container maxWidth="lg">
+            <motion.div
+              initial="hidden"
+              animate={specialsInView ? "visible" : "hidden"}
+              variants={staggerContainer}
+            >
+              <Box sx={{ textAlign: "center", mb: 8 }}>
+                <motion.div variants={fadeInUp}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: "primary.main",
+                      fontWeight: 600,
+                      letterSpacing: 3,
+                      mb: 2,
+                      display: "block",
+                    }}
                   >
-                    <Box
-                      sx={{
-                        p: 3,
-                        borderRadius: 3,
-                        bgcolor: "rgba(255, 255, 255, 0.1)",
-                        backdropFilter: "blur(10px)",
-                        textAlign: "center",
-                        transition: "all 0.3s ease",
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                        "&:hover": {
-                          bgcolor: "rgba(255, 255, 255, 0.15)",
-                          borderColor: "secondary.main",
-                        },
-                      }}
-                    >
-                      <Box sx={{ color: "secondary.main", mb: 1 }}>
-                        {weeklyIcons[item.icon]}
-                      </Box>
-                      <Typography
-                        variant="h6"
-                        sx={{ fontWeight: 700, mb: 1, color: "secondary.main" }}
-                      >
-                        {item.day}
-                      </Typography>
-                      <Typography variant="body2" sx={{ opacity: 0.9 }}>
-                        {item.special}
-                      </Typography>
+                    DAILY DEALS
+                  </Typography>
+                </motion.div>
+                <motion.div variants={fadeInUp}>
+                  <Typography variant="h2">
+                    This Week's
+                    <Box component="span" sx={{ color: "primary.main" }}>
+                      {" "}
+                      Specials
                     </Box>
-                  </motion.div>
-                </Grid>
-              ))}
-            </Grid>
-          </motion.div>
-        </Container>
-      </Box>
-
-      {/* CTA Section */}
-      <Box
-        sx={{
-          py: { xs: 10, md: 14 },
-          bgcolor: "background.default",
-          textAlign: "center",
-        }}
-      >
-        <Container maxWidth="sm">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-          >
-            <Typography variant="h3" sx={{ mb: 3 }}>
-              Ready to
-              <Box component="span" sx={{ color: "primary.main" }}>
-                {" "}
-                Indulge?
+                  </Typography>
+                </motion.div>
               </Box>
-            </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              These specials won't last forever. Visit us today and treat
-              yourself!
-            </Typography>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                component={Link}
-                to="/contact?subject=Reservation"
-                variant="contained"
-                size="large"
-                sx={{ py: 2, px: 5, fontSize: "1.1rem" }}
-              >
-                Reserve Your Table
-              </Button>
+
+              <Grid container spacing={3}>
+                {weeklySpecials.map((special) => (
+                  <Grid
+                    size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+                    key={special.day}
+                  >
+                    <motion.div
+                      variants={staggerItem}
+                      whileHover={{ y: -8, scale: 1.02 }}
+                    >
+                      <Card
+                        sx={{
+                          height: "100%",
+                          p: 3,
+                          position: "relative",
+                          overflow: "hidden",
+                          border: "2px solid rgba(255, 255, 255, 0.1)",
+                          bgcolor: "rgba(15, 15, 15, 0.95)",
+                          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                          "&::after": {
+                            content: '""',
+                            position: "absolute",
+                            inset: 0,
+                            borderRadius: "inherit",
+                            background:
+                              "linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 50%)",
+                            opacity: 0,
+                            transition: "opacity 0.4s ease",
+                            pointerEvents: "none",
+                          },
+                          "&:hover": {
+                            borderColor: "rgba(255, 255, 255, 0.3)",
+                            boxShadow: "0 25px 70px rgba(0, 0, 0, 0.4)",
+                          },
+                          "&:hover::after": {
+                            opacity: 1,
+                          },
+                        }}
+                      >
+                        <CardContent sx={{ p: 0 }}>
+                          <Typography
+                            variant="h5"
+                            sx={{
+                              fontWeight: 900,
+                              mb: 3,
+                              textAlign: "center",
+                              color: "primary.main",
+                              textTransform: "uppercase",
+                              letterSpacing: "0.05em",
+                            }}
+                          >
+                            {special.day}
+                          </Typography>
+
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: 2,
+                            }}
+                          >
+                            {special.items.map((item, itemIndex) => (
+                              <Box
+                                key={itemIndex}
+                                sx={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 2,
+                                  p: 2,
+                                  borderRadius: 4,
+                                  bgcolor: "rgba(255, 255, 255, 0.03)",
+                                  transition: "all 0.3s ease",
+                                  "&:hover": {
+                                    bgcolor: "rgba(255, 255, 255, 0.06)",
+                                  },
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    color: "primary.main",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  {weeklyIcons[item.icon]}
+                                </Box>
+                                <Box sx={{ flex: 1 }}>
+                                  <Typography
+                                    variant="body1"
+                                    sx={{
+                                      fontWeight: 700,
+                                      color: "text.primary",
+                                      fontSize: "0.95rem",
+                                      mb: item.note ? 0.5 : 0,
+                                    }}
+                                  >
+                                    {item.name}
+                                  </Typography>
+                                  {item.note && (
+                                    <Typography
+                                      variant="caption"
+                                      sx={{
+                                        color: "text.secondary",
+                                        fontSize: "0.75rem",
+                                      }}
+                                    >
+                                      {item.note}
+                                    </Typography>
+                                  )}
+                                </Box>
+                                <Typography
+                                  variant="h6"
+                                  sx={{
+                                    fontWeight: 800,
+                                    color: "#FFFFFF",
+                                    fontSize: "1.1rem",
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  {item.price}
+                                </Typography>
+                              </Box>
+                            ))}
+                          </Box>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  </Grid>
+                ))}
+              </Grid>
             </motion.div>
-          </motion.div>
-        </Container>
+          </Container>
+        </Box>
+
+        {/* Weekend Brunch */}
+        <Box
+          ref={brunchRef}
+          sx={{
+            py: { xs: 8, md: 12 },
+            background: "linear-gradient(135deg, #1A1A1A 0%, #0A0A0A 100%)",
+            color: "white",
+          }}
+        >
+          <Container maxWidth="lg">
+            <motion.div
+              initial="hidden"
+              animate={brunchInView ? "visible" : "hidden"}
+              variants={staggerContainer}
+            >
+              <Box sx={{ textAlign: "center", mb: 6 }}>
+                <motion.div variants={fadeInUp}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: "#AAAAAA",
+                      fontWeight: 600,
+                      letterSpacing: 3,
+                      mb: 2,
+                      display: "block",
+                    }}
+                  >
+                    SATURDAY & SUNDAY
+                  </Typography>
+                </motion.div>
+                <motion.div variants={fadeInUp}>
+                  <Typography variant="h2" sx={{ mb: 2 }}>
+                    Weekend Brunch
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    sx={{ color: "#CCCCCC", fontWeight: 400 }}
+                  >
+                    10:00 AM TO 1:00 PM
+                  </Typography>
+                </motion.div>
+              </Box>
+
+              <Grid container spacing={3} justifyContent="center">
+                {brunchSpecials.map((item, index) => (
+                  <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
+                    <motion.div
+                      variants={staggerItem}
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <Box
+                        sx={{
+                          p: 4,
+                          textAlign: "center",
+                          borderRadius: 4,
+                          bgcolor: "rgba(255, 255, 255, 0.05)",
+                          backdropFilter: "blur(10px)",
+                          transition: "all 0.3s ease",
+                          border: "1px solid rgba(255, 255, 255, 0.08)",
+                          height: "100%",
+                          "&:hover": {
+                            bgcolor: "rgba(255, 255, 255, 0.1)",
+                            borderColor: "rgba(255, 255, 255, 0.2)",
+                          },
+                        }}
+                      >
+                        <Box sx={{ color: "#FFFFFF", mb: 2 }}>
+                          {weeklyIcons.breakfast}
+                        </Box>
+                        <Typography
+                          variant="h6"
+                          sx={{ fontWeight: 700, mb: 1, color: "#FFFFFF" }}
+                        >
+                          {item.name}
+                        </Typography>
+                        <Typography
+                          variant="h4"
+                          sx={{ fontWeight: 800, color: "primary.main", mb: 1 }}
+                        >
+                          {item.price}
+                        </Typography>
+                        <Chip
+                          label="Free for Kids"
+                          size="small"
+                          sx={{
+                            bgcolor: "rgba(255, 255, 255, 0.15)",
+                            color: "#FFFFFF",
+                            fontWeight: 600,
+                          }}
+                        />
+                      </Box>
+                    </motion.div>
+                  </Grid>
+                ))}
+              </Grid>
+
+              <motion.div variants={fadeInUp}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    textAlign: "center",
+                    mt: 4,
+                    color: "#CCCCCC",
+                    fontStyle: "italic",
+                  }}
+                >
+                  All classic breakfast items are served with home fries & fresh
+                  fruit.
+                </Typography>
+              </motion.div>
+            </motion.div>
+          </Container>
+        </Box>
+
+        {/* Game Time */}
+        <Box
+          ref={gameRef}
+          sx={{
+            py: { xs: 10, md: 14 },
+            bgcolor: "background.default",
+            position: "relative",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              inset: 0,
+              background:
+                "radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%)",
+              pointerEvents: "none",
+            },
+          }}
+        >
+          <Container maxWidth="md">
+            <motion.div
+              initial="hidden"
+              animate={gameInView ? "visible" : "hidden"}
+              variants={staggerContainer}
+            >
+              <Box sx={{ textAlign: "center" }}>
+                <motion.div variants={fadeInUp}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: "primary.main",
+                      fontWeight: 600,
+                      letterSpacing: 3,
+                      mb: 2,
+                      display: "block",
+                    }}
+                  >
+                    WATCH THE GAME
+                  </Typography>
+                </motion.div>
+                <motion.div variants={fadeInUp}>
+                  <Typography variant="h2" sx={{ mb: 3 }}>
+                    {gameTimeSpecial.title}
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{ mb: 5, color: "primary.main", fontWeight: 700 }}
+                  >
+                    {gameTimeSpecial.description}
+                  </Typography>
+                </motion.div>
+
+                <motion.div variants={fadeInUp}>
+                  <Grid container spacing={2} justifyContent="center">
+                    {gameTimeSpecial.teams.map((team, index) => (
+                      <Grid size={{ xs: 6, sm: 3 }} key={index}>
+                        <Box
+                          sx={{
+                            p: 3,
+                            borderRadius: 4,
+                            bgcolor: "rgba(255, 255, 255, 0.03)",
+                            border: "1px solid rgba(255, 255, 255, 0.08)",
+                            transition: "all 0.3s ease",
+                            "&:hover": {
+                              bgcolor: "rgba(255, 255, 255, 0.06)",
+                              borderColor: "rgba(255, 255, 255, 0.15)",
+                            },
+                          }}
+                        >
+                          <Box sx={{ color: "primary.main", mb: 2 }}>
+                            {team.icon}
+                          </Box>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              fontWeight: 700,
+                              color: "text.primary",
+                              fontSize: "0.85rem",
+                            }}
+                          >
+                            {team.name}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </motion.div>
+              </Box>
+            </motion.div>
+          </Container>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

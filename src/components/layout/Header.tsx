@@ -18,7 +18,7 @@ import {
   Paper,
   Fade,
 } from "@mui/material";
-import { FiMenu, FiX, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { FiMenu, FiX, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { motion, LayoutGroup } from "framer-motion";
 import { NAV_LINKS, MENU_CATEGORIES, RESTAURANT_INFO } from "@/constants";
 import { useScrollPosition } from "@/hooks";
@@ -65,29 +65,40 @@ const Header = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         sx={{
+          // Always floating glass-morphism header
           bgcolor: isScrolled
-            ? "rgba(255, 249, 245, 0.95)"
-            : "rgba(255, 249, 245, 0.85)",
-          backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)",
-          borderBottom: isScrolled
-            ? "1px solid rgba(139, 38, 53, 0.1)"
-            : "1px solid rgba(139, 38, 53, 0.05)",
-          borderRadius: isScrolled ? "16px" : 0,
-          boxShadow: isScrolled ? "0 4px 20px rgba(139, 38, 53, 0.1)" : "none",
-          top: isScrolled ? 16 : 0,
-          left: isScrolled ? 16 : 0,
-          right: isScrolled ? 16 : 0,
-          width: isScrolled ? "calc(100% - 32px)" : "100%",
-          transition: "all 0.3s ease",
+            ? "rgba(10, 10, 10, 0.85)"
+            : "rgba(15, 15, 15, 0.6)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+          borderRadius: { xs: "0 0 16px 16px", md: "16px" },
+          boxShadow: isScrolled
+            ? "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)"
+            : "0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.03)",
+          top: { xs: 0, md: 16 },
+          left: { xs: 0, md: 24 },
+          right: { xs: 0, md: 24 },
+          width: { xs: "100%", md: "calc(100% - 48px)" },
+          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            borderRadius: "inherit",
+            background:
+              "linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%)",
+            pointerEvents: "none",
+          },
         }}
       >
         <Toolbar
           sx={{
-            maxWidth: isScrolled ? 1400 : "100%",
+            maxWidth: 1400,
             width: "100%",
             mx: "auto",
             px: { xs: 2, md: 4 },
-            height: { xs: 70, md: 80 },
+            height: { xs: 64, md: 72 },
             justifyContent: "space-between",
           }}
         >
@@ -95,6 +106,7 @@ const Header = () => {
           <Box
             component={Link}
             to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -114,7 +126,7 @@ const Header = () => {
             >
               <Box
                 component="img"
-                src="/the-rolling-barrel.png"
+                src="/the-rolling-barrel-logo.png"
                 alt="The Rolling Barrel"
                 sx={{
                   width: { xs: 50, md: 55 },
@@ -129,13 +141,17 @@ const Header = () => {
               />
             </motion.div>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              {/* Logo type using Science Gothic (extracted from logo file) */}
               <Typography
                 variant="h6"
                 sx={{
-                  fontWeight: 800,
+                  fontFamily: '"Science Gothic", sans-serif',
+                  fontWeight: 900,
                   color: "primary.main",
-                  lineHeight: 1.1,
-                  fontSize: { xs: "1rem", md: "1.2rem" },
+                  lineHeight: 1.05,
+                  fontSize: { xs: "0.95rem", md: "1.05rem" },
+                  letterSpacing: "0.03em",
+                  textTransform: "uppercase",
                 }}
               >
                 THE ROLLING
@@ -143,11 +159,15 @@ const Header = () => {
               <Typography
                 variant="h6"
                 sx={{
-                  fontWeight: 800,
-                  color: "secondary.dark",
-                  lineHeight: 1.1,
-                  fontSize: { xs: "1rem", md: "1.2rem" },
-                  letterSpacing: "0.1em",
+                  fontFamily: '"Science Gothic", sans-serif',
+                  fontWeight: 900,
+                  lineHeight: 1.05,
+                  fontSize: { xs: "0.95rem", md: "1.05rem" },
+                  letterSpacing: "0.12em",
+                  background:
+                    "linear-gradient(135deg, #FFFFFF 0%, #888888 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
                 }}
               >
                 BARREL
@@ -197,8 +217,11 @@ const Header = () => {
                           color: isActive(link.path)
                             ? "primary.main"
                             : "text.primary",
-                          fontWeight: isActive(link.path) ? 700 : 500,
-                          fontSize: "0.95rem",
+                          fontWeight: isActive(link.path) ? 900 : 700,
+                          fontSize: "0.85rem",
+                          fontFamily: '"Science Gothic", sans-serif',
+                          letterSpacing: "0.04em",
+                          textTransform: "uppercase",
                           position: "relative",
                           transition: "color 0.3s ease",
                           "&:hover": {
@@ -225,11 +248,11 @@ const Header = () => {
                             layoutId="nav-indicator"
                             style={{
                               position: "absolute",
-                              bottom: 0,
-                              left: "10%",
-                              right: "10%",
-                              height: 3,
-                              backgroundColor: "#8B2635",
+                              bottom: -6,
+                              left: "12%",
+                              right: "12%",
+                              height: 2,
+                              backgroundColor: "#FFFFFF",
                               borderRadius: 4,
                             }}
                             transition={{
@@ -257,10 +280,11 @@ const Header = () => {
                             <Paper
                               sx={{
                                 mt: 1,
-                                borderRadius: 1,
+                                borderRadius: 4,
                                 overflow: "hidden",
-                                boxShadow: "0 20px 60px rgba(139, 38, 53, 0.2)",
-                                border: "1px solid rgba(139, 38, 53, 0.1)",
+                                boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
+                                border: "1px solid rgba(255, 255, 255, 0.1)",
+                                bgcolor: "rgba(15, 15, 15, 0.98)",
                                 pointerEvents: "auto",
                               }}
                             >
@@ -279,13 +303,13 @@ const Header = () => {
                                       px: 2.5,
                                       py: 1.5,
                                       cursor: "pointer",
-                                      borderRadius: 2,
+                                      borderRadius: 4,
                                       display: "flex",
                                       alignItems: "center",
                                       gap: 1.5,
                                       transition: "all 0.2s ease",
                                       "&:hover": {
-                                        bgcolor: "rgba(139, 38, 53, 0.08)",
+                                        bgcolor: "rgba(255, 255, 255, 0.08)",
                                         pl: 3,
                                       },
                                     }}
@@ -301,7 +325,7 @@ const Header = () => {
                                     />
                                     <Typography
                                       sx={{
-                                        fontWeight: 500,
+                                        fontWeight: 700,
                                         color: "text.primary",
                                       }}
                                     >
@@ -327,9 +351,9 @@ const Header = () => {
               onClick={() => setDrawerOpen(true)}
               sx={{
                 color: "primary.main",
-                bgcolor: "rgba(139, 38, 53, 0.08)",
+                bgcolor: "rgba(255, 255, 255, 0.08)",
                 "&:hover": {
-                  bgcolor: "rgba(139, 38, 53, 0.15)",
+                  bgcolor: "rgba(255, 255, 255, 0.15)",
                 },
               }}
             >
@@ -364,13 +388,20 @@ const Header = () => {
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <Box
               component="img"
-              src="/the-rolling-barrel.png"
+              src="/the-rolling-barrel-logo.png"
               alt="The Rolling Barrel"
-              sx={{ width: 45, height: 45 }}
+              sx={{ width: 45, height: 45, objectFit: "contain" }}
             />
             <Typography
               variant="h6"
-              sx={{ fontWeight: 700, color: "primary.main" }}
+              sx={{
+                fontFamily: '"Science Gothic", sans-serif',
+                fontWeight: 900,
+                color: "primary.main",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                background: "linear-gradient(135deg, #FFFFFF 0%, #888888 100%)",
+              }}
             >
               {RESTAURANT_INFO.name}
             </Typography>
@@ -402,24 +433,27 @@ const Header = () => {
                     sx={{
                       py: 2,
                       px: 3,
-                      borderRadius: 2,
+                      borderRadius: 4,
                       mb: 1,
                       bgcolor: isActive(link.path)
-                        ? "rgba(139, 38, 53, 0.08)"
+                        ? "rgba(255, 255, 255, 0.08)"
                         : "transparent",
                       "&:hover": {
-                        bgcolor: "rgba(139, 38, 53, 0.08)",
+                        bgcolor: "rgba(255, 255, 255, 0.08)",
                       },
                     }}
                   >
                     <ListItemText
                       primary={link.label}
                       primaryTypographyProps={{
-                        fontWeight: isActive(link.path) ? 700 : 500,
-                        fontSize: "1.1rem",
+                        fontWeight: isActive(link.path) ? 900 : 700,
+                        fontSize: "0.95rem",
                         color: isActive(link.path)
                           ? "primary.main"
                           : "text.primary",
+                        fontFamily: '"Science Gothic", sans-serif',
+                        letterSpacing: "0.03em",
+                        textTransform: "uppercase",
                       }}
                     />
                     {link.label === "Menu" &&
@@ -439,7 +473,7 @@ const Header = () => {
                           sx={{
                             py: 1.5,
                             px: 3,
-                            borderRadius: 2,
+                            borderRadius: 4,
                             ml: 2,
                             borderLeft: "2px solid",
                             borderColor: "primary.main",
@@ -448,8 +482,11 @@ const Header = () => {
                           <ListItemText
                             primary={category.label}
                             primaryTypographyProps={{
-                              fontSize: "1rem",
+                              fontSize: "0.95rem",
                               color: "text.secondary",
+                              fontFamily: '"Science Gothic", sans-serif',
+                              fontWeight: 700,
+                              letterSpacing: "0.02em",
                             }}
                           />
                         </ListItemButton>
@@ -467,19 +504,14 @@ const Header = () => {
           sx={{
             mt: "auto",
             pt: 3,
-            borderTop: "1px solid rgba(139, 38, 53, 0.1)",
+            borderTop: "1px solid rgba(255, 255, 255, 0.1)",
           }}
         >
           <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
             {RESTAURANT_INFO.phoneFormatted}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {RESTAURANT_INFO.address.full}
-          </Typography>
         </Box>
       </Drawer>
-
-      {/* Spacer for fixed header */}
       <Toolbar sx={{ height: { xs: 70, md: 80 } }} />
     </>
   );

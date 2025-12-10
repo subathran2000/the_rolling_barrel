@@ -19,19 +19,17 @@ export const RESTAURANT_INFO = {
   },
   social: {
     facebook:
-      "https://www.facebook.com/people/The-Rolling-Barrel/61573017651458",
+      "https://www.facebook.com/people/the-rolling-barrel-logo/61573017651458",
     instagram:
       "https://www.instagram.com/rollingbarrelrestaurant?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
     tiktok: "https://www.tiktok.com/@rolling.barrel",
   },
   delivery: {
     uberEats:
-      "https://www.ubereats.com/ca/store/the-rolling-barrel/XqIxAHDqX7CAMMUdN0YO1A",
-  },
-  onlineOrdering: {
-    // Add the online ordering link here when available
-    link: "", // Will be updated later
-    enabled: false,
+      "https://www.ubereats.com/ca/store/the-rolling-barrel-logo/XqIxAHDqX7CAMMUdN0YO1A",
+    doorDash:
+      "https://www.doordash.com/store/the-rolling-barrel-inc.-oshawa-31147107/47910556/?pickup=true&utm_campaign=gpa",
+    directOrder: "https://order.tbdine.com/pickup/54072/menu",
   },
   hours: {
     monday: "8:00 AM - 10:00 PM",
@@ -45,12 +43,12 @@ export const RESTAURANT_INFO = {
 };
 
 export const NAV_LINKS = [
-  { label: 'Home', path: '/' },
-  { label: 'About', path: '/about' },
-  { label: 'Menu', path: '/menu' },
-  { label: 'Specials', path: '/specials' },
-  { label: 'Our Stories', path: '/stories' },
-  { label: 'Contact', path: '/contact' }
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
+  { label: "Menu", path: "/menu" },
+  { label: "Specials", path: "/specials" },
+  // { label: 'Our Stories', path: '/stories' },
+  { label: "Contact", path: "/contact" },
 ];
 
 export const MENU_CATEGORIES = [

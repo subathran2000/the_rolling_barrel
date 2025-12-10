@@ -10,6 +10,8 @@ import {
   Chip,
 } from "@mui/material";
 import { motion } from "framer-motion";
+import { SEO, FloatingElements } from "@/components/common";
+import Scene3D from "@/components/3d/Scene";
 import {
   FaQuoteLeft,
   FaCheckCircle,
@@ -130,439 +132,488 @@ const Stories = () => {
   const { ref: socialRef, isInView: socialInView } = useInView();
 
   return (
-    <Box sx={{ overflow: "hidden" }}>
-      {/* Hero Section */}
-      <Box
-        sx={{
-          py: { xs: 12, md: 20 },
-          background: `
-            radial-gradient(ellipse at 20% 50%, rgba(139, 38, 53, 0.1) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 30%, rgba(212, 165, 116, 0.1) 0%, transparent 40%),
-            linear-gradient(180deg, #FFF9F5 0%, #FFFFFF 100%)
+    <>
+      <SEO
+        title="Stories & Reviews"
+        description="Read customer stories and reviews about their dining experience at The Rolling Barrel. See why our guests love our authentic Sri Lankan cuisine."
+      />
+      <Box sx={{ overflowX: "hidden" }}>
+        <Box
+          sx={{
+            py: { xs: 12, md: 20 },
+            position: "relative",
+            background: `
+            radial-gradient(ellipse at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 30%, rgba(136, 136, 136, 0.05) 0%, transparent 40%),
+            linear-gradient(180deg, #050505 0%, #0A0A0A 100%)
           `,
-          textAlign: "center",
-        }}
-      >
-        <Container maxWidth="md">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="overline"
-                sx={{
-                  color: "primary.main",
-                  fontWeight: 600,
-                  letterSpacing: 4,
-                  mb: 2,
-                  display: "block",
-                }}
-              >
-                EXPERIENCES
-              </Typography>
-            </motion.div>
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="h1"
-                sx={{
-                  mb: 3,
-                  background:
-                    "linear-gradient(135deg, #8B2635 0%, #5D1A23 50%, #D4A574 100%)",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                Our Stories
-              </Typography>
-            </motion.div>
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="h5"
-                sx={{
-                  color: "text.secondary",
-                  maxWidth: 600,
-                  mx: "auto",
-                  fontWeight: 400,
-                  lineHeight: 1.6,
-                }}
-              >
-                Real stories from real guests. Discover what makes The Rolling
-                Barrel special.
-              </Typography>
-            </motion.div>
-          </motion.div>
-        </Container>
-      </Box>
-
-      {/* Testimonials Section */}
-      <Box
-        ref={testimonialsRef}
-        sx={{
-          py: { xs: 8, md: 12 },
-          bgcolor: "background.paper",
-        }}
-      >
-        <Container maxWidth="lg">
-          <motion.div
-            initial="hidden"
-            animate={testimonialsInView ? "visible" : "hidden"}
-            variants={staggerContainer}
-          >
-            <Box sx={{ textAlign: "center", mb: 8 }}>
+            textAlign: "center",
+            overflow: "hidden",
+            minHeight: { xs: "auto", md: "55vh" },
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {/* 3D Background Scene */}
+          <Scene3D variant="ambient" intensity={0.6} />
+          <FloatingElements variant="light" density="normal" />
+          <Container maxWidth="md">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
+            >
               <motion.div variants={fadeInUp}>
                 <Typography
                   variant="overline"
                   sx={{
                     color: "primary.main",
                     fontWeight: 600,
-                    letterSpacing: 3,
+                    letterSpacing: 4,
                     mb: 2,
                     display: "block",
                   }}
                 >
-                  GUEST REVIEWS
+                  EXPERIENCES
                 </Typography>
               </motion.div>
               <motion.div variants={fadeInUp}>
-                <Typography variant="h2">
-                  What Our Guests
-                  <Box component="span" sx={{ color: "primary.main" }}>
-                    {" "}
-                    Say
-                  </Box>
+                <Typography
+                  variant="h1"
+                  sx={{
+                    mb: 3,
+                    background:
+                      "linear-gradient(135deg, #FFFFFF 0%, #888888 50%, #FFFFFF 100%)",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  Our Stories
                 </Typography>
               </motion.div>
-            </Box>
+              <motion.div variants={fadeInUp}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    color: "text.secondary",
+                    maxWidth: 600,
+                    mx: "auto",
+                    fontWeight: 400,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Real stories from real guests. Discover what makes The Rolling
+                  Barrel special.
+                </Typography>
+              </motion.div>
+            </motion.div>
+          </Container>
+        </Box>
 
-            <Grid container spacing={4}>
-              {testimonials.map((testimonial) => (
-                <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={testimonial.id}>
-                  <motion.div variants={staggerItem} whileHover={{ y: -5 }}>
-                    <Card
-                      sx={{
-                        height: "100%",
-                        p: 4,
-                        position: "relative",
-                        border: "1px solid rgba(139, 38, 53, 0.1)",
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          borderColor: "primary.main",
-                          boxShadow: "0 15px 40px rgba(139, 38, 53, 0.15)",
-                        },
-                      }}
-                    >
-                      {/* Decorative quote icon - replaced with react-icon */}
-                      <FaQuoteLeft
-                        style={{
-                          position: "absolute",
-                          top: 20,
-                          right: 20,
-                          fontSize: 40,
-                          color: "var(--mui-palette-primary-main)",
-                          opacity: 0.2,
+        {/* Testimonials Section */}
+        <Box
+          ref={testimonialsRef}
+          sx={{
+            py: { xs: 8, md: 12 },
+            bgcolor: "background.paper",
+            position: "relative",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              inset: 0,
+              background:
+                "radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(136, 136, 136, 0.03) 0%, transparent 50%)",
+              pointerEvents: "none",
+            },
+          }}
+        >
+          <Container maxWidth="lg">
+            <motion.div
+              initial="hidden"
+              animate={testimonialsInView ? "visible" : "hidden"}
+              variants={staggerContainer}
+            >
+              <Box sx={{ textAlign: "center", mb: 8 }}>
+                <motion.div variants={fadeInUp}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: "primary.main",
+                      fontWeight: 600,
+                      letterSpacing: 3,
+                      mb: 2,
+                      display: "block",
+                    }}
+                  >
+                    GUEST REVIEWS
+                  </Typography>
+                </motion.div>
+                <motion.div variants={fadeInUp}>
+                  <Typography variant="h2">
+                    What Our Guests
+                    <Box component="span" sx={{ color: "primary.main" }}>
+                      {" "}
+                      Say
+                    </Box>
+                  </Typography>
+                </motion.div>
+              </Box>
+
+              <Grid container spacing={4}>
+                {testimonials.map((testimonial) => (
+                  <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={testimonial.id}>
+                    <motion.div variants={staggerItem} whileHover={{ y: -5 }}>
+                      <Card
+                        sx={{
+                          height: "100%",
+                          p: 4,
+                          position: "relative",
+                          border: "1px solid rgba(255, 255, 255, 0.08)",
+                          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                          overflow: "hidden",
+                          bgcolor: "#0F0F0F",
+                          "&::before": {
+                            content: '""',
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "4px",
+                            height: "100%",
+                            background:
+                              "linear-gradient(180deg, #FFFFFF, #888888)",
+                            transform: "scaleY(0)",
+                            transformOrigin: "top",
+                            transition: "transform 0.4s ease",
+                          },
+                          "&:hover": {
+                            borderColor: "rgba(255, 255, 255, 0.2)",
+                            boxShadow: "0 20px 50px rgba(0, 0, 0, 0.4)",
+                          },
+                          "&:hover::before": {
+                            transform: "scaleY(1)",
+                          },
                         }}
-                      />
-                      <CardContent sx={{ p: 0 }}>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 2,
-                            mb: 3,
+                      >
+                        {/* Decorative quote icon - replaced with react-icon */}
+                        <FaQuoteLeft
+                          style={{
+                            position: "absolute",
+                            top: 20,
+                            right: 20,
+                            fontSize: 40,
+                            color: "var(--mui-palette-primary-main)",
+                            opacity: 0.2,
                           }}
-                        >
-                          <Avatar
+                        />
+                        <CardContent sx={{ p: 0 }}>
+                          <Box
                             sx={{
-                              width: 56,
-                              height: 56,
-                              fontSize: "1rem",
-                              fontWeight: 700,
-                              bgcolor: "primary.main",
-                              color: "primary.contrastText",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 2,
+                              mb: 3,
                             }}
                           >
-                            {testimonial.avatar}
-                          </Avatar>
-                          <Box>
-                            <Box
+                            <Avatar
                               sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 1,
+                                width: 56,
+                                height: 56,
+                                fontSize: "1rem",
+                                fontWeight: 700,
+                                bgcolor: "primary.main",
+                                color: "primary.contrastText",
                               }}
                             >
-                              <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                                {testimonial.name}
+                              {testimonial.avatar}
+                            </Avatar>
+                            <Box>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 1,
+                                }}
+                              >
+                                <Typography
+                                  variant="h6"
+                                  sx={{ fontWeight: 700 }}
+                                >
+                                  {testimonial.name}
+                                </Typography>
+                                {testimonial.verified && (
+                                  <FaCheckCircle
+                                    style={{
+                                      fontSize: 18,
+                                      color: "var(--mui-palette-primary-main)",
+                                    }}
+                                  />
+                                )}
+                              </Box>
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                {testimonial.date}
                               </Typography>
-                              {testimonial.verified && (
-                                <FaCheckCircle
-                                  style={{
-                                    fontSize: 18,
-                                    color: "var(--mui-palette-primary-main)",
-                                  }}
-                                />
-                              )}
                             </Box>
-                            <Typography variant="body2" color="text.secondary">
-                              {testimonial.date}
-                            </Typography>
                           </Box>
-                        </Box>
 
-                        <Rating
-                          value={testimonial.rating}
-                          readOnly
-                          sx={{ mb: 2 }}
-                        />
+                          <Rating
+                            value={testimonial.rating}
+                            readOnly
+                            sx={{ mb: 2 }}
+                          />
 
-                        <Typography
-                          variant="body1"
-                          color="text.secondary"
-                          sx={{ lineHeight: 1.8, fontStyle: "italic" }}
-                        >
-                          "{testimonial.review}"
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                </Grid>
-              ))}
-            </Grid>
-          </motion.div>
-        </Container>
-      </Box>
+                          <Typography
+                            variant="body1"
+                            color="text.secondary"
+                            sx={{ lineHeight: 1.8, fontStyle: "italic" }}
+                          >
+                            "{testimonial.review}"
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  </Grid>
+                ))}
+              </Grid>
+            </motion.div>
+          </Container>
+        </Box>
 
-      {/* Highlights Section */}
-      <Box
-        ref={highlightsRef}
-        sx={{
-          py: { xs: 8, md: 12 },
-          bgcolor: "background.default",
-        }}
-      >
-        <Container maxWidth="lg">
-          <motion.div
-            initial="hidden"
-            animate={highlightsInView ? "visible" : "hidden"}
-            variants={staggerContainer}
-          >
-            <Box sx={{ textAlign: "center", mb: 8 }}>
-              <motion.div variants={fadeInUp}>
-                <Typography
-                  variant="overline"
-                  sx={{
-                    color: "primary.main",
-                    fontWeight: 600,
-                    letterSpacing: 3,
-                    mb: 2,
-                    display: "block",
-                  }}
-                >
-                  MILESTONES
-                </Typography>
-              </motion.div>
-              <motion.div variants={fadeInUp}>
-                <Typography variant="h2">
-                  Our Journey
-                  <Box component="span" sx={{ color: "primary.main" }}>
-                    {" "}
-                    So Far
-                  </Box>
-                </Typography>
-              </motion.div>
-            </Box>
-
-            <Grid container spacing={4}>
-              {highlights.map((highlight, index) => (
-                <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
-                  <motion.div
-                    variants={staggerItem}
-                    whileHover={{ scale: 1.05 }}
+        {/* Highlights Section */}
+        <Box
+          ref={highlightsRef}
+          sx={{
+            py: { xs: 8, md: 12 },
+            bgcolor: "background.default",
+          }}
+        >
+          <Container maxWidth="lg">
+            <motion.div
+              initial="hidden"
+              animate={highlightsInView ? "visible" : "hidden"}
+              variants={staggerContainer}
+            >
+              <Box sx={{ textAlign: "center", mb: 8 }}>
+                <motion.div variants={fadeInUp}>
+                  <Typography
+                    variant="overline"
+                    sx={{
+                      color: "primary.main",
+                      fontWeight: 600,
+                      letterSpacing: 3,
+                      mb: 2,
+                      display: "block",
+                    }}
                   >
-                    <Box
-                      sx={{
-                        p: 4,
-                        textAlign: "center",
-                        borderRadius: 4,
-                        bgcolor: "background.paper",
-                        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
-                        height: "100%",
-                        transition: "all 0.3s ease",
-                        border: "1px solid transparent",
-                        "&:hover": {
-                          borderColor: "primary.main",
-                          boxShadow: "0 10px 40px rgba(139, 38, 53, 0.15)",
-                        },
-                      }}
+                    MILESTONES
+                  </Typography>
+                </motion.div>
+                <motion.div variants={fadeInUp}>
+                  <Typography variant="h2">
+                    Our Journey
+                    <Box component="span" sx={{ color: "primary.main" }}>
+                      {" "}
+                      So Far
+                    </Box>
+                  </Typography>
+                </motion.div>
+              </Box>
+
+              <Grid container spacing={4}>
+                {highlights.map((highlight, index) => (
+                  <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
+                    <motion.div
+                      variants={staggerItem}
+                      whileHover={{ scale: 1.05 }}
                     >
                       <Box
                         sx={{
-                          color: "primary.main",
-                          mb: 2,
+                          p: 4,
+                          textAlign: "center",
+                          borderRadius: 4,
+                          bgcolor: "background.paper",
+                          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+                          height: "100%",
+                          transition: "all 0.3s ease",
+                          border: "1px solid rgba(255, 255, 255, 0.05)",
+                          "&:hover": {
+                            borderColor: "rgba(255, 255, 255, 0.15)",
+                            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.5)",
+                          },
                         }}
                       >
-                        {highlightIcons[highlight.icon]}
+                        <Box
+                          sx={{
+                            color: "primary.main",
+                            mb: 2,
+                          }}
+                        >
+                          {highlightIcons[highlight.icon]}
+                        </Box>
+                        <Chip
+                          label={highlight.date}
+                          size="small"
+                          sx={{
+                            mb: 2,
+                            bgcolor: "rgba(255, 255, 255, 0.08)",
+                            color: "text.primary",
+                          }}
+                        />
+                        <Typography
+                          variant="h6"
+                          sx={{ fontWeight: 700, mb: 1 }}
+                        >
+                          {highlight.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {highlight.description}
+                        </Typography>
                       </Box>
-                      <Chip
-                        label={highlight.date}
-                        size="small"
-                        sx={{
-                          mb: 2,
-                          bgcolor: "rgba(139, 38, 53, 0.1)",
-                          color: "primary.main",
-                        }}
-                      />
-                      <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
-                        {highlight.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {highlight.description}
-                      </Typography>
-                    </Box>
-                  </motion.div>
-                </Grid>
-              ))}
-            </Grid>
-          </motion.div>
-        </Container>
-      </Box>
-
-      {/* Social Media Section */}
-      <Box
-        ref={socialRef}
-        sx={{
-          py: { xs: 10, md: 14 },
-          background: "linear-gradient(135deg, #8B2635 0%, #5D1A23 100%)",
-          color: "white",
-          textAlign: "center",
-        }}
-      >
-        <Container maxWidth="md">
-          <motion.div
-            initial="hidden"
-            animate={socialInView ? "visible" : "hidden"}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="overline"
-                sx={{
-                  color: "secondary.main",
-                  fontWeight: 600,
-                  letterSpacing: 3,
-                  mb: 2,
-                  display: "block",
-                }}
-              >
-                CONNECT WITH US
-              </Typography>
-            </motion.div>
-            <motion.div variants={fadeInUp}>
-              <Typography variant="h2" sx={{ mb: 3 }}>
-                Follow Our Journey
-              </Typography>
-            </motion.div>
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="h6"
-                sx={{ opacity: 0.9, mb: 5, fontWeight: 400 }}
-              >
-                Stay updated with our latest dishes, behind-the-scenes moments,
-                and special events. Tag us in your photos - we love seeing your
-                experiences!
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={fadeInUp}>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: 3,
-                  flexWrap: "wrap",
-                }}
-              >
-                {[
-                  {
-                    icon: <FaInstagram />,
-                    label: "Instagram",
-                    url: RESTAURANT_INFO.social.instagram,
-                  },
-                  {
-                    icon: <FaFacebook />,
-                    label: "Facebook",
-                    url: RESTAURANT_INFO.social.facebook,
-                  },
-                  {
-                    icon: (
-                      <svg
-                        viewBox="0 0 24 24"
-                        width="24"
-                        height="24"
-                        fill="currentColor"
-                      >
-                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-                      </svg>
-                    ),
-                    label: "TikTok",
-                    url: RESTAURANT_INFO.social.tiktok,
-                  },
-                ].map((social) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1.5,
-                        px: 4,
-                        py: 2,
-                        borderRadius: 50,
-                        bgcolor: "rgba(255, 255, 255, 0.1)",
-                        color: "white",
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          bgcolor: "secondary.main",
-                          color: "primary.dark",
-                        },
-                      }}
-                    >
-                      {social.icon}
-                      <Typography variant="button" sx={{ fontWeight: 600 }}>
-                        {social.label}
-                      </Typography>
-                    </Box>
-                  </motion.a>
+                    </motion.div>
+                  </Grid>
                 ))}
-              </Box>
+              </Grid>
             </motion.div>
+          </Container>
+        </Box>
 
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="h5"
-                sx={{
-                  mt: 6,
-                  fontWeight: 700,
-                  color: "secondary.main",
-                }}
-              >
-                @rollingbarrelrestaurant
-              </Typography>
+        {/* Social Media Section */}
+        <Box
+          ref={socialRef}
+          sx={{
+            py: { xs: 10, md: 14 },
+            background: "linear-gradient(135deg, #0A0A0A 0%, #151515 100%)",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          <Container maxWidth="md">
+            <motion.div
+              initial="hidden"
+              animate={socialInView ? "visible" : "hidden"}
+              variants={staggerContainer}
+            >
+              <motion.div variants={fadeInUp}>
+                <Typography
+                  variant="overline"
+                  sx={{
+                    color: "secondary.main",
+                    fontWeight: 600,
+                    letterSpacing: 3,
+                    mb: 2,
+                    display: "block",
+                  }}
+                >
+                  CONNECT WITH US
+                </Typography>
+              </motion.div>
+              <motion.div variants={fadeInUp}>
+                <Typography variant="h2" sx={{ mb: 3 }}>
+                  Follow Our Journey
+                </Typography>
+              </motion.div>
+              <motion.div variants={fadeInUp}>
+                <Typography
+                  variant="h6"
+                  sx={{ opacity: 0.9, mb: 5, fontWeight: 400 }}
+                >
+                  Stay updated with our latest dishes, behind-the-scenes
+                  moments, and special events. Tag us in your photos - we love
+                  seeing your experiences!
+                </Typography>
+              </motion.div>
+
+              <motion.div variants={fadeInUp}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: 3,
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {[
+                    {
+                      icon: <FaInstagram />,
+                      label: "Instagram",
+                      url: RESTAURANT_INFO.social.instagram,
+                    },
+                    {
+                      icon: <FaFacebook />,
+                      label: "Facebook",
+                      url: RESTAURANT_INFO.social.facebook,
+                    },
+                    {
+                      icon: (
+                        <svg
+                          viewBox="0 0 24 24"
+                          width="24"
+                          height="24"
+                          fill="currentColor"
+                        >
+                          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                        </svg>
+                      ),
+                      label: "TikTok",
+                      url: RESTAURANT_INFO.social.tiktok,
+                    },
+                  ].map((social) => (
+                    <motion.a
+                      key={social.label}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.1, y: -5 }}
+                      whileTap={{ scale: 0.95 }}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 1.5,
+                          px: 4,
+                          py: 2,
+                          borderRadius: 4,
+                          bgcolor: "rgba(255, 255, 255, 0.1)",
+                          color: "white",
+                          transition: "all 0.3s ease",
+                          "&:hover": {
+                            bgcolor: "secondary.main",
+                            color: "primary.dark",
+                          },
+                        }}
+                      >
+                        {social.icon}
+                        <Typography variant="button" sx={{ fontWeight: 600 }}>
+                          {social.label}
+                        </Typography>
+                      </Box>
+                    </motion.a>
+                  ))}
+                </Box>
+              </motion.div>
+
+              <motion.div variants={fadeInUp}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    mt: 6,
+                    fontWeight: 700,
+                    color: "secondary.main",
+                  }}
+                >
+                  @rollingbarrelrestaurant
+                </Typography>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </Container>
+          </Container>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

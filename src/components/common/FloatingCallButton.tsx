@@ -27,9 +27,9 @@ const FloatingCallButton = () => {
           animate={{
             scale: [1, 1.1, 1],
             boxShadow: [
-              "0 4px 20px rgba(139, 38, 53, 0.3)",
-              "0 8px 40px rgba(139, 38, 53, 0.5)",
-              "0 4px 20px rgba(139, 38, 53, 0.3)",
+              "0 4px 20px rgba(255, 255, 255, 0.2)",
+              "0 8px 40px rgba(255, 255, 255, 0.35)",
+              "0 4px 20px rgba(255, 255, 255, 0.2)",
             ],
           }}
           transition={{
@@ -46,17 +46,17 @@ const FloatingCallButton = () => {
             sx={{
               width: { xs: 56, md: 64 },
               height: { xs: 56, md: 64 },
-              bgcolor: "primary.main",
-              color: "white",
-              boxShadow: "0 4px 20px rgba(139, 38, 53, 0.4)",
+              bgcolor: "#FFFFFF",
+              color: "#000000",
+              boxShadow: "0 4px 20px rgba(255, 255, 255, 0.25)",
               transition: "all 0.3s ease",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               "&:hover": {
-                bgcolor: "primary.dark",
+                bgcolor: "#E0E0E0",
                 transform: "scale(1.1)",
-                boxShadow: "0 8px 30px rgba(139, 38, 53, 0.5)",
+                boxShadow: "0 8px 30px rgba(255, 255, 255, 0.35)",
               },
               "&:active": {
                 transform: "scale(0.95)",
