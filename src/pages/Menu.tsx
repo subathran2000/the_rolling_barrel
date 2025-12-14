@@ -14,7 +14,7 @@ import Scene3D from "@/components/3d/Scene";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaFire, FaLeaf } from "react-icons/fa";
 import { fadeInUp } from "@/utils";
-import { menuData, getTotalMenuItems } from "@/data";
+import { menuData } from "@/data";
 
 // Intelligent price parser for multiple sizes/prices
 interface PriceOption {
@@ -109,7 +109,6 @@ const Menu = () => {
   const currentMenu = menuData[currentCategory] || menuData.breakfast;
 
   // Count total items
-  const totalItems = getTotalMenuItems();
 
   return (
     <>
@@ -158,7 +157,7 @@ const Menu = () => {
                     display: "block",
                   }}
                 >
-                  {totalItems}+ DELICIOUS OPTIONS
+                  200+ DELICIOUS OPTIONS
                 </Typography>
               </motion.div>
               <motion.div variants={fadeInUp}>

@@ -1570,16 +1570,3 @@ export const menuData: MenuData = {
     ],
   },
 };
-
-// Helper to get total menu items count
-export const getTotalMenuItems = (): number => {
-  return Object.values(menuData).reduce(
-    (total, cat) =>
-      total +
-      cat.subcategories.reduce(
-        (subTotal, sub) => subTotal + sub.items.length,
-        0
-      ),
-    0
-  );
-};
